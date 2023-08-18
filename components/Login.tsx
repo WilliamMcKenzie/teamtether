@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import Layout from "../components/Layout"
-import User, { UserProps } from "../components/User"
+import Router from "next/router";
+import ReactMarkdown from "react-markdown";
 import { useNavigate } from 'react-router-dom';
-import useSWR from 'swr'
-import axios from 'axios'
 
-const fetcher = (url, data) => {
-  if (data) {
-    return axios.post(url, data).then(res => res.data);
-  } else {
-    return axios.get(url).then(res => res.data);
-  }
+export type UserProps = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
 };
 
-const TeamTether = () => {
+const User: React.FC<{ user: UserProps }> = ({ user }) => {
+  const userName = user.name
+
   const [loginField, setLogin] = useState("")
   const [passwordField, setPassword] = useState("")
   const [errorMessage, setError] = useState("")
   var myClass = "form login__form"
   var curLogin = ''
   var curPassword = ''
+
+  const navigate = useNavigate();
 
   const UpdateLogin = event => {
     curLogin = event.target.value
@@ -32,14 +33,19 @@ const TeamTether = () => {
     setPassword(curPassword)
   }
   const Login = async () => {
-    var res = await fetcher(`http://localhost:3000/api/userconfig?login=${loginField}&password=${passwordField}`, false);
+    console.log({ login: loginField, password: passwordField })
 
-    if (!res.name) setError("User not found")
-    else console.log(res)
+    if (user) {
+
+      navigate('/home')
+    }
+    else {
+      setError("User not found")
+    }
   }
 
   return (<form className={myClass} id="login">
-    <h1 className="form__title">Index</h1>
+    <h1 className="form__title">Login</h1>
     <div className="form__message form__message--error">{errorMessage}</div>
     <div className="form__input-group">
       <input type="text" className="form__input" onChange={UpdateLogin} value={loginField} autoFocus placeholder="Username/email"></input>
@@ -54,7 +60,17 @@ const TeamTether = () => {
       <a href="./" className="form__link">Forgot your password?</a>
     </p>
   </form>
-  )
-}
+    // <div onClick={() => Router.push("/p/[id]", `/p/${user.id}`)}>
+    //   <h2>{userName}</h2>
+    //   <ReactMarkdown children={user.email} />
+    //   <style jsx>{`
+    //     div {
+    //       color: inherit;
+    //       padding: 2rem;
+    //     }
+    //   `}</style>
+    // </div>
+  );
+};
 
-export default TeamTether
+export default User;

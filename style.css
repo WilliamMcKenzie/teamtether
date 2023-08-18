@@ -1,0 +1,149 @@
+body {
+  --color-primary: #09D38B;
+  --color-primary-dark: #09B6D3;
+  --color-secondary: #0951D3;
+  --color-error: #cc4333;
+  --color-success: #4bb544;
+  --border-radius: 10px;
+
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: url("https://foyr.com/learn/wp-content/uploads/2021/08/modern-office-design.png");
+}
+
+iframe {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.container {
+  width: 800px;
+  max-width: 800px;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background: #ffffff;
+}
+
+.container,
+.form__input,
+.form__button {
+  font-family: 'Trebuchet MS';
+  font: 400 1rem;
+}
+
+.register__form {}
+
+.login__form {}
+
+.form>*:first-child {
+  margin-top: 0;
+}
+
+.form>*:last-child {
+  margin-bottom: 0;
+}
+
+.form__title {
+  margin-bottom: 2rem;
+  text-align: center;
+
+}
+
+.form__message {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form__message--success {
+  color: var(--color-success);
+}
+
+.form__message--error {
+  color: var(--color-error);
+}
+
+.form__input-group {
+  margin-bottom: 1rem;
+}
+
+.form__input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  border-radius: var(--border-radius);
+  border-color: #eeeeee;
+  border-style: solid;
+  outline: none;
+  background: #eeeeee;
+  transition: background 0.2s, border-color 0.2s;
+  font-family: 'Trebuchet MS';
+}
+
+.form__input:focus {
+  border-color: var(--color-primary-dark);
+  background: white;
+}
+
+.form__input--error {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.form__input-error-message {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-error);
+}
+
+.form__button {
+  width: 100%;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding: 1rem, 2rem;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-primary);
+}
+
+.form__button:hover {
+  background: var(--color-primary-dark);
+  transform: scale(1.02);
+}
+
+.form__button:active {
+  transform: scale(0.98);
+}
+
+.form__text {
+  text-align: center;
+}
+
+.form__link {
+  color: var(--color-primary-dark);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form__link:hover {
+  color: var(--color-secondary)
+}
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  font-style: italic;
+}
