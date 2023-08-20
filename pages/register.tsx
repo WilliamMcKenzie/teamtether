@@ -12,6 +12,7 @@ const fetcher = (url, data) => {
         return axios.get(url).then(res => res.data);
     }
 };
+//s
 
 const TeamTether = () => {
     const [nameField, setName] = useState("")
