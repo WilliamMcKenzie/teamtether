@@ -15,7 +15,7 @@ const fetcher = (url, data) => {
 
 const TeamTether = () => {
   const router = useRouter()
-  const user = JSON.parse(router.query.user)
+  const user = JSON.parse(router.query.user as string)
   const [loaded, setLoaded] = useState(false);
   var [popupClass, setPopupClass] = useState("home__popup container")
   var [newIcon, setIcon] = useState(user.icon)
