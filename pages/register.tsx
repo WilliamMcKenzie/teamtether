@@ -40,7 +40,7 @@ const TeamTether = () => {
         setPassword(curPassword)
     }
     const Register = async () => {
-        var res = await fetcher(`http://localhost:3000/api/register?name=${nameField}&email=${emailField}&password=${passwordField}`, false);
+        var res = await fetcher(`teamtether.williamqm.com/api/register?name=${nameField}&email=${emailField}&password=${passwordField}`, false);
 
         if (!res.name) setError("Email or username & password combination taken")
         else console.log(res)
