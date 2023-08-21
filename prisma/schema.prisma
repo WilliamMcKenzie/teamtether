@@ -16,6 +16,7 @@ model User {
   password String
   name String 
   email String @unique
+  icon String
   role String @default("BASIC")
   chats Chat[]
   texts Text[]

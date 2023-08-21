@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Layout from "../components/Layout"
 import User, { UserProps } from "../components/User"
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import axios from 'axios'
 
@@ -21,21 +21,25 @@ const TeamTether = () => {
     var curLogin = ''
     var curPassword = ''
 
+    const router = useRouter()
+
+
     const UpdateLogin = event => {
         curLogin = event.target.value
-        console.log(curLogin)
         setLogin(curLogin)
     }
     const UpdatePassword = event => {
         curPassword = event.target.value
-        console.log(curPassword)
         setPassword(curPassword)
     }
     const Login = async () => {
         var res = await fetcher(`/api/login?login=${loginField}&password=${passwordField}`, false);
 
         if (!res.name) setError("User not found")
-        else console.log(res)
+        else router.push({
+            pathname: '/',
+            query: { user: JSON.stringify(res) }
+        }, '/')
     }
 
     return (<div className='container'>
@@ -52,7 +56,7 @@ const TeamTether = () => {
             </div>
             <button className="form__button" type="button" onClick={Login}>Submit</button>
             <p className="form__text">
-                <a href="./" className="form__link">Forgot your password?</a>
+                <a href="./register" className="form__link">Don't have an account?</a>
             </p>
         </form>
     </div>)

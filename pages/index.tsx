@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Layout from "../components/Layout"
 import User, { UserProps } from "../components/User"
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import axios from 'axios'
 
@@ -14,9 +14,61 @@ const fetcher = (url, data) => {
 };
 
 const TeamTether = () => {
+  const router = useRouter()
+  const user = JSON.parse(router.query.user)
+  const [loaded, setLoaded] = useState(false);
+  var [popupClass, setPopupClass] = useState("home__popup container")
+  var [newIcon, setIcon] = useState(user.icon)
+  var [newName, setName] = useState(user.name)
+  console.log(user);
 
-  return (<form>
-  </form>
+  const PopupConfig = () => {
+
+  }
+
+  const UpdateName = event => {
+    newName = event.target.value
+    setName(newName)
+  }
+  const UpdateIcon = event => {
+    newIcon = event.target.value
+    setIcon(newIcon)
+  }
+
+  return (<div className='home'>
+    <div className='mask'></div>
+    <div className='home__navbar'>
+      <button className='home__userIcon__container' onClick={PopupConfig}>
+        <img className='home__userIcon' src={user.icon}></img>
+      </button>
+    </div>
+    <div className={popupClass}>
+      <div className="form__input-group">
+        <img src='https://boring-avatars-api.vercel.app/api/avatar?size=401&variant=beam' className='home__popup__image'></img>
+        <h1 className="form__title">Icon Url</h1>
+        <input type="text" className="form__input" autoFocus placeholder="New Profile Url" onChange={UpdateIcon} value={newIcon}></input>
+      </div>
+      <h1 className="form__title">Username</h1>
+      <div className="form__input-group">
+        <input type="text" className="form__input" onChange={UpdateName} value={newName} autoFocus placeholder="New Username"></input>
+        <div className="form__input-error-message"></div>
+      </div>
+    </div>
+    <div className="home__chats">
+      <h1>Chats</h1>
+    </div>
+    <div className="home__messages">
+      <button className='home__messages__message'>
+        <button className='home__messages__message__user'>
+          <img className='home__messages__userIcon' src={user.icon}></img>
+        </button>
+        <div>
+          <h1>message</h1>
+          <p>content</p>
+        </div>
+      </button>
+    </div>
+  </div>
   )
 }
 

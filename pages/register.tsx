@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Layout from "../components/Layout"
 import User, { UserProps } from "../components/User"
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import axios from 'axios'
 
@@ -24,26 +24,28 @@ const TeamTether = () => {
     var curEmail = ''
     var curPassword = ''
 
+    const router = useRouter()
+
     const UpdateName = event => {
         curName = event.target.value
-        console.log(curName)
         setName(curName)
     }
     const UpdateEmail = event => {
         curEmail = event.target.value
-        console.log(curEmail)
         setEmail(curEmail)
     }
     const UpdatePassword = event => {
         curPassword = event.target.value
-        console.log(curPassword)
         setPassword(curPassword)
     }
     const Register = async () => {
-        var res = await fetcher(`/api/register?name=${nameField}&email=${emailField}&password=${passwordField}`, false);
+        var res = await fetcher(`/api/register?name=${nameField}&email=${emailField}&password=${passwordField}&icon=${`https://boring-avatars-api.vercel.app/api/avatar?size=${Math.round(Math.random() * 40)}&variant=beam`}`, false);
 
         if (!res.name) setError("Email or username & password combination taken")
-        else console.log(res)
+        else router.push({
+            pathname: '/',
+            query: { user: JSON.stringify(res) }
+        }, '/')
     }
 
     return (<div className='container'>
@@ -63,6 +65,9 @@ const TeamTether = () => {
                 <div className="form__input-error-message"></div>
             </div>
             <button className="form__button" type="button" onClick={Register}>Submit</button>
+            <p className="form__text">
+                <a href="./login" className="form__link">Have an account?</a>
+            </p>
         </form>
     </div>)
 }
