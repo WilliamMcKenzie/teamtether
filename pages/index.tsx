@@ -15,7 +15,26 @@ const fetcher = (url, data) => {
 
 const TeamTether = () => {
   const router = useRouter()
-  const user = JSON.parse(router.query.user as string)
+  var user = {
+    email
+      :
+      "sd",
+    icon:
+      "https://boring-avatars-api.vercel.app/api/avatar?size=9",
+    id
+      :
+      "bf467b53-d778-4b22-b04f-a98643beebe7",
+    name
+      :
+      "ddda",
+    password
+      :
+      "ddd",
+    role
+      :
+      "ADMIN",
+  }
+  if (JSON.parse(router.query.user as string).name == true) user = JSON.parse(router.query.user as string)
   const [loaded, setLoaded] = useState(false);
   var [popupClass, setPopupClass] = useState("home__popup container")
   var [newIcon, setIcon] = useState(user.icon)
