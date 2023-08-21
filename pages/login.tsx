@@ -32,7 +32,7 @@ const TeamTether = () => {
         setPassword(curPassword)
     }
     const Login = async () => {
-        var res = await fetcher(`teamtether.williamqm.com/api/login?login=${loginField}&password=${passwordField}`, false);
+        var res = await fetcher(`/api/login?login=${loginField}&password=${passwordField}`, false);
 
         if (!res.name) setError("User not found")
         else console.log(res)
