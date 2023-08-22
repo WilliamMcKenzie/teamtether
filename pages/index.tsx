@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from "../components/Layout"
 import User, { UserProps } from "../components/User"
 import { useRouter } from 'next/router'
@@ -21,15 +21,12 @@ const TeamTether = () => {
     user = JSON.parse(router.query.user as string)
   }
   else {
-    user = {
-      email: "johndoe",
-      icon: "https://api.dicebear.com/6.x/identicon/svg?seed=Felix",
-      id: "bf467b53-d778-4b22-b04f-a98643beebe7",
-      name: "ddda",
-      password: "ddd",
-      role: "ADMIN",
-    }
+    user = { id: '0e16f8f8-cc53-4401-acb3-9c94376255fc', password: '$piderman12', name: 'Will', email: 'williamqmckenzie@gmail.com', icon: 'https://api.dicebear.com/6.x/identicon/svg?seed=9627', role: "ADMIN" }
+    useEffect(() => {
+      router.push('/login')
+    }, [])
   }
+
   var [popupClass, setPopupClass] = useState("home__popup container")
   var [curIcon, setCurIcon] = useState(user.icon)
   var [maskClass, setMaskClass] = useState('mask')
@@ -40,6 +37,13 @@ const TeamTether = () => {
   var [newEmail, setEmail] = useState(user.email)
   var [newPassword, setPassword] = useState(user.password)
   const [animated, setAnimated] = useState(false);
+
+  const GoToLogin = async () => {
+    router.push({
+      pathname: '/login',
+      query: { user: "s" }
+    }, '/login')
+  }
 
   const PopupConfig = () => {
     setPopupClass('home__popup container')
@@ -116,7 +120,7 @@ const TeamTether = () => {
           <img className={animated ? 'home__popup__image_refresh_icon spin' : 'home__popup__image_refresh_icon'}></img>
         </button>
       </div>
-      <h1 className="form__title">Edit profile</h1>
+      <h1 className="form__title" onClick={GoToLogin}>Edit profile</h1>
       <div className="form__message form__message--error">{errorMessage}</div>
       <div className="form__input-group home__popup_name_group">
         <label>Name:</label>

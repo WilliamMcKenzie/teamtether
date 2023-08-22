@@ -240,7 +240,7 @@ iframe {
 }
 
 .home__chats {
-  width: 20vw;
+  width: 10vw;
   background-color: #F7F7F7;
   height: 100vh;
 
@@ -250,7 +250,7 @@ iframe {
 }
 
 .home__chats div {
-  width: 15vw;
+  width: 8vw;
   background-color: #ffffff;
   margin-top: 10vh;
   height: 10vh
@@ -258,7 +258,7 @@ iframe {
 
 .home__messages {
   width: 70vw;
-  background-color: #E7E7E7;
+
   height: 100vh
 }
 
