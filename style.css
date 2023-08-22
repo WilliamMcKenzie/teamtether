@@ -21,7 +21,7 @@ iframe {
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
 
 .mask {
@@ -87,6 +87,9 @@ iframe {
 }
 
 .home__popup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   padding-bottom: 20vh;
   position: absolute;
   margin-left: auto;
@@ -97,6 +100,24 @@ iframe {
   text-align: center;
   z-index: 10;
 }
+
+.home__popup label {
+  font-style: italic;
+  color: #757575;
+  background-color: #ffffff;
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+}
+
+.home__popup h1 {
+  margin-top: 0;
+}
+
+.home__popup_name_group {
+  display: flex;
+  align-items: center;
+}
+
 
 .home__popup__close {
   position: absolute;
@@ -138,6 +159,15 @@ iframe {
   border-color: #eeeeee;
   border-style: solid;
   padding: 0.75rem;
+
+  width: fit-content;
+
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 4vh;
+  left: 0;
+  right: 0;
 }
 
 .home__popup__image_refresh:hover {
@@ -321,6 +351,8 @@ iframe {
 
 .form__input-group {
   margin-bottom: 1rem;
+  width: 100%;
+
 }
 
 .form__input {
