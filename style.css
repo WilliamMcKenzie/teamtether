@@ -65,7 +65,6 @@ iframe {
 }
 
 .home__userIcon__container {
-  border-radius: 50%;
   height: 4vw;
   width: 4vw;
   padding: 0;
@@ -85,7 +84,6 @@ iframe {
 
 .home__userIcon {
   width: 4vw;
-  border-radius: 50%;
 }
 
 .home__popup {
@@ -100,24 +98,115 @@ iframe {
   z-index: 10;
 }
 
+.home__popup__close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: #eeeeee;
+  outline: none;
+  border-radius: var(--border-radius);
+  border-color: #eeeeee;
+  border-style: solid;
+  padding: 0.75rem;
+}
+
+.home__popup__close_icon {
+  content: url("./icons/close.png");
+  width: 20px;
+  height: 20px;
+}
+
 .home__popup__image {
-  width: 4vw;
-  height: 4vw;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 50%;
   border: 5px solid white;
   background-color: white;
 
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  top: -3vh;
+  top: -7vh;
   left: 0;
   right: 0;
 }
 
-.home__popup__image_error {
-  content: url("./icons/image_not_found.png");
+.home__popup__image_refresh {
+  background: #eeeeee;
+  outline: none;
+  border-radius: var(--border-radius);
+  border-color: #eeeeee;
+  border-style: solid;
+  padding: 0.75rem;
+}
+
+.home__popup__image_refresh:hover {
+  background: #ffffff;
+  border-color: var(--color-primary-dark);
+  cursor: pointer;
+}
+
+.home__popup__image_refresh:active {
+  transform: scale(1.1);
+}
+
+.home__popup__image_refresh_icon {
+  content: url("./icons/reload.png");
+  width: 30px;
+  height: 30px;
+}
+
+.spin {
+  animation: spin 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(350deg);
+  }
+}
+
+.home__popup-confirmation {
+  bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 10px;
+}
+
+.home__popup-confirmation button {
+  margin: 10px;
+}
+
+.home__popup-cancel {
+  font-family: 'Trebuchet MS';
+  font: 400 1rem;
+  background-color: var(--color-error);
+  width: 100%;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding: 1rem;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+}
+
+.home__popup-cancel:hover {
+  background: #bb2955;
+  transform: scale(1.02);
+}
+
+.home__popup-cancel:active {
+  transform: scale(0.98);
 }
 
 .home__chats {
@@ -178,7 +267,6 @@ iframe {
 }
 
 .home__messages__message__user {
-  border-radius: 50%;
   height: 4vw;
   width: 4vw;
   padding: 0;
@@ -192,7 +280,6 @@ iframe {
 
 .home__messages__userIcon {
   width: 4vw;
-  border-radius: 50%;
 }
 
 
@@ -204,10 +291,6 @@ iframe {
   font-family: 'Trebuchet MS';
   font: 400 1rem;
 }
-
-.register__form {}
-
-.login__form {}
 
 .form>*:first-child {
   margin-top: 0;

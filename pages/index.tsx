@@ -20,7 +20,7 @@ const TeamTether = () => {
       :
       "sd",
     icon:
-      "https://boring-avatars-api.vercel.app/api/avatar?size=9",
+      "https://api.dicebear.com/6.x/identicon/svg?seed=Felix",
     id
       :
       "bf467b53-d778-4b22-b04f-a98643beebe7",
@@ -37,12 +37,11 @@ const TeamTether = () => {
   if (router.query.user) {
     user = JSON.parse(router.query.user as string)
   }
-  "if (JSON.parse(router.query.user as string).name == true) user = JSON.parse(router.query.user as string)"
   const [loaded, setLoaded] = useState(false);
   var [popupClass, setPopupClass] = useState("home__popup container")
   var [newIcon, setIcon] = useState(user.icon)
   var [newName, setName] = useState(user.name)
-  console.log(user);
+  const [animated, setAnimated] = useState(false);
 
   const PopupConfig = () => {
 
@@ -52,9 +51,8 @@ const TeamTether = () => {
     newName = event.target.value
     setName(newName)
   }
-  const UpdateIcon = event => {
-    newIcon = event.target.value
-    setIcon(newIcon)
+  const UpdateIcon = () => {
+    setIcon(`https://api.dicebear.com/6.x/identicon/svg?seed=${Math.floor(Math.random() * 10000)}`)
   }
 
   return (<div className='home'>
@@ -65,15 +63,24 @@ const TeamTether = () => {
       </button>
     </div>
     <div className={popupClass}>
+      <button className='home__popup__close'>
+        <img className='home__popup__close_icon'></img>
+      </button>
       <div className="form__input-group">
-        <img src='https://boring-avatars-api.vercel.app/api/avatar?size=401&variant=beam' className='home__popup__image'></img>
-        <h1 className="form__title">Icon Url</h1>
-        <input type="text" className="form__input" autoFocus placeholder="New Profile Url" onChange={UpdateIcon} value={newIcon}></input>
+        <img src={newIcon} className='home__popup__image'></img>
+        <button className='home__popup__image_refresh' onClick={UpdateIcon} onMouseDown={() => setAnimated(() => true)}
+          onAnimationEnd={() => setAnimated(() => false)}>
+          <img className={animated ? 'home__popup__image_refresh_icon spin' : 'home__popup__image_refresh_icon'}></img>
+        </button>
       </div>
       <h1 className="form__title">Username</h1>
       <div className="form__input-group">
         <input type="text" className="form__input" onChange={UpdateName} value={newName} autoFocus placeholder="New Username"></input>
         <div className="form__input-error-message"></div>
+      </div>
+      <div className="home__popup-confirmation">
+        <button className="form__button" type="button">Save</button>
+        <button className="home__popup-cancel" type="button">Cancel</button>
       </div>
     </div>
     <div className="home__chats">
