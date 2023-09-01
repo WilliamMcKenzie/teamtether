@@ -4,14 +4,11 @@ const prisma = new PrismaClient()
 
 export default async function handle(req, res) {
     try {
-        const { name, email, password, icon } = req.query;
+        const { id } = req.query;
 
-        const user = await prisma.user.create({
-            data: {
-                name: name,
-                email: email,
-                password: password,
-                icon: icon
+        const user = await prisma.user.findFirst({
+            where: {
+                id: id
             },
         });
 

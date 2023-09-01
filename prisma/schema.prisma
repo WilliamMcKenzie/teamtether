@@ -22,6 +22,7 @@ model User {
   texts Text[]
 
   @@unique([password, name])
+  @@unique([id, icon, name])
 }
 
 model Chat {
@@ -33,9 +34,13 @@ model Chat {
 
 model Text {
   id String @id @default(uuid())
+  title String
   content String
+  likes Int
   chat Chat @relation(fields: [chatId], references: [id])
   chatId String
-  author User @relation(fields: [authorId], references: [id])
+  author User @relation(fields: [authorId, authorIcon, authorName], references: [id, icon, name])
   authorId String
+  authorName String
+  authorIcon String
 }

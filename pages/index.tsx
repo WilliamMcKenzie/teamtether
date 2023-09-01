@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Layout from "../components/Layout"
-import User, { UserProps } from "../components/User"
 import { useRouter } from 'next/router'
-import useSWR from 'swr'
+import Chats from '../components/Chats';
 import axios from 'axios'
 
 const fetcher = (url, data) => {
@@ -16,9 +14,25 @@ const fetcher = (url, data) => {
 const TeamTether = () => {
   const router = useRouter()
   var user
+  const [chats, setChats] = useState([]);
+  const [chatsMessages, setMessages] = useState([]);
 
+
+  const GetChats = async () => {
+    var chats = await fetcher(`/api/chats?name=${user.name}&email=${user.email}&password=${user.password}`, false);
+    setChats(chats)
+  }
+  const GetMessages = async (chat) => {
+    var messages = await fetcher(`/api/texts?id=${chat.id}`, false);
+    setMessages(messages)
+    console.log(chatsMessages)
+  }
+
+
+  //get user
   if (router.query.user) {
     user = JSON.parse(router.query.user as string)
+    GetChats()
   }
   else {
     user = { id: '0e16f8f8-cc53-4401-acb3-9c94376255fc', password: '$piderman12', name: 'Will', email: 'williamqmckenzie@gmail.com', icon: 'https://api.dicebear.com/6.x/identicon/svg?seed=9627', role: "ADMIN" }
@@ -105,9 +119,7 @@ const TeamTether = () => {
   return (<div className='home'>
     <div className={maskClass}></div>
     <div className='home__navbar'>
-      <button className='home__userIcon__container' onClick={PopupConfig}>
-        <img className='home__userIcon' src={curIcon}></img>
-      </button>
+
     </div>
     <div className={popupClass}>
       <button className='home__popup__close' onClick={CancelUpdate}>
@@ -142,22 +154,49 @@ const TeamTether = () => {
         <button className="home__popup-cancel" type="button" onClick={CancelUpdate}>Cancel</button>
       </div>
     </div>
-    <div className="home__chats">
-      <h1>Chats</h1>
-    </div>
-    <div className="home__messages">
-      <button className='home__messages__message'>
-        <button className='home__messages__message__user'>
-          <img className='home__messages__userIcon' src={curIcon}></img>
+    <div className='home__sidebar'>
+      <div className='home__sidebar_top'>
+        <button className='home__userIcon__container' onClick={PopupConfig}>
+          <img className='home__userIcon' src={curIcon}></img>
         </button>
+        <h1>{user.name}</h1>
+      </div>
+      <div className='home__sidebar_bottom' onClick={GetChats}>
         <div>
-          <h1>message</h1>
-          <p>content</p>
+          {chats.map((chat) => (
+            <button onClick={() => GetMessages(chat)}>
+              <img src={chat.users[0].icon}></img>
+              <h1>{chat.name}</h1>
+            </button>
+          ))}
         </div>
-      </button>
+      </div>
     </div>
-  </div>
-  )
+    <div className='home__content'>
+      {chatsMessages.map((message) => (
+        <button className='message'>
+          <div className='message_content'>
+            <div className='message_author_info'>
+              <img src={message.authorIcon}></img>
+              <div>
+                <h1>{message.title}</h1>
+                <p>Posted by {message.authorName}</p>
+              </div>
+            </div>
+            <p>{message.content.length < 300 ? "" : message.content}</p>
+            {message.content.length < 300 ? <div /> : <div className='bottom_gradient'></div>}
+          </div>
+          <div className='message_options'>
+            <img src='https://cdn-icons-png.flaticon.com/512/126/126473.png'></img>
+            <img src='https://cdn-icons-png.flaticon.com/512/126/126504.png'></img>
+            <img src='https://cdn-icons-png.flaticon.com/512/1358/1358023.png'></img>
+            <img src='https://cdn-icons-png.flaticon.com/512/1380/1380338.png'></img>
+          </div>
+        </button>
+      ))
+      }
+    </div>
+  </div>)
 }
 
 export default TeamTether

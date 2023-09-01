@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Layout from "../components/Layout"
-import User, { UserProps } from "../components/User"
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import axios from 'axios'
