@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import Chats from '../components/Chats';
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import { faThumbsDown } from '@fortawesome/free-regular-svg-icons';
+import { faComment } from '@fortawesome/free-regular-svg-icons';
+import { faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
 
 const fetcher = (url, data) => {
   if (data) {
@@ -180,17 +185,17 @@ const TeamTether = () => {
               <img src={message.authorIcon}></img>
               <div>
                 <h1>{message.title}</h1>
-                <p>Posted by {message.authorName}</p>
+                <p className='noPadding'>Posted by {message.authorName}</p>
               </div>
             </div>
-            <p>{message.content.length < 300 ? "" : message.content}</p>
-            {message.content.length < 300 ? <div /> : <div className='bottom_gradient'></div>}
+            <p>{message.content}
+              {message.content.length < 400 ? <div /> : <div className='bottom_gradient'></div>}
+            </p>
           </div>
           <div className='message_options'>
-            <img src='https://cdn-icons-png.flaticon.com/512/126/126473.png'></img>
-            <img src='https://cdn-icons-png.flaticon.com/512/126/126504.png'></img>
-            <img src='https://cdn-icons-png.flaticon.com/512/1358/1358023.png'></img>
-            <img src='https://cdn-icons-png.flaticon.com/512/1380/1380338.png'></img>
+            <FontAwesomeIcon icon={faThumbsUp} className='message_icon'></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faThumbsDown} className='message_icon'></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faShareFromSquare} className='message_icon'></FontAwesomeIcon>
           </div>
         </button>
       ))

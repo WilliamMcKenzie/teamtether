@@ -72,17 +72,20 @@ iframe {
 }
 
 .message {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   width: 60vw;
-  max-width: 700px;
-  height: fit-content;
+  height: 700px;
   max-height: 300px;
-  overflow: hidden;
   align-items: top;
   text-align: left;
   margin-bottom: 20px;
   margin-top: 10px;
+
+  padding-bottom: 80px;
+  color: #353535;
 
   background-color: #ffffff;
   border: 2px solid #e6e5e5;
@@ -92,6 +95,7 @@ iframe {
 .message_content {
   position: relative;
   font-family: 'Trebuchet MS';
+  overflow: hidden;
 }
 
 .message_author_info {
@@ -101,11 +105,18 @@ iframe {
 
 .message_author_info p {
   margin: 0;
+  padding: 0 !important;
 }
 
 .message p {
+  font-size: 20px;
+  font-weight: 100;
+  color: #5a5a5a;
+
   height: fit-content;
-  max-height: 100px;
+  max-height: 210px;
+  width: 56vw;
+  padding-left: 20px;
   overflow: hidden;
 }
 
@@ -123,19 +134,39 @@ iframe {
 .bottom_gradient {
   position: absolute;
   bottom: 0px;
-  width: 100%;
-  box-shadow: 0px -10px 20px 20px white;
+  width: 56vw;
+  box-shadow: 0px 0px 30px 20px white;
   z-index: 1;
 }
 
 .message_options {
   display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  width: 99%;
+  padding-bottom: 16px;
+
+  border-top: 4px solid white;
+  ;
 }
 
-.message_options img {
-  width: 80px;
+.message_icon {
+  width: 40px;
+  height: 40px;
   margin: 10px;
   z-index: 2;
+
+  padding-left: 20px;
+  color: #bfbfbf
+}
+
+.message_icon:hover {
+  filter: brightness(1.2);
+
+
+  color: rgb(11, 170, 114)
 }
 
 .home__sidebar {
@@ -539,4 +570,8 @@ iframe {
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   font-style: italic;
+}
+
+body::-webkit-scrollbar {
+  z-index: 10;
 }
