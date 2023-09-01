@@ -91,6 +91,7 @@ iframe {
 
 .message_content {
   position: relative;
+  font-family: 'Trebuchet MS';
 }
 
 .message_author_info {
