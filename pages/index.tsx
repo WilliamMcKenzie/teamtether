@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router'
 import Chats from '../components/Chats';
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
-import { faThumbsDown } from '@fortawesome/free-regular-svg-icons';
-import { faComment } from '@fortawesome/free-regular-svg-icons';
-import { faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { faShare } from '@fortawesome/free-solid-svg-icons';
 
 const fetcher = (url, data) => {
   if (data) {
@@ -123,9 +123,7 @@ const TeamTether = () => {
 
   return (<div className='home'>
     <div className={maskClass}></div>
-    <div className='home__navbar'>
 
-    </div>
     <div className={popupClass}>
       <button className='home__popup__close' onClick={CancelUpdate}>
         <img className='home__popup__close_icon'></img>
@@ -168,8 +166,11 @@ const TeamTether = () => {
       </div>
       <div className='home__sidebar_bottom' onClick={GetChats}>
         <div>
+          <div className='chatHeader'>
+            <h1>Chats</h1>
+          </div>
           {chats.map((chat) => (
-            <button onClick={() => GetMessages(chat)}>
+            <button onClick={() => GetMessages(chat)} className='chat'>
               <img src={chat.users[0].icon}></img>
               <h1>{chat.name}</h1>
             </button>
@@ -195,7 +196,7 @@ const TeamTether = () => {
           <div className='message_options'>
             <FontAwesomeIcon icon={faThumbsUp} className='message_icon'></FontAwesomeIcon>
             <FontAwesomeIcon icon={faThumbsDown} className='message_icon'></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faShareFromSquare} className='message_icon'></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faShare} className='message_icon'></FontAwesomeIcon>
           </div>
         </button>
       ))

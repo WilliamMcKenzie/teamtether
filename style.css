@@ -13,6 +13,8 @@ body {
   justify-content: center;
   font-size: 18px;
   background: url("icons/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   overflow-x: hidden;
 }
 
@@ -63,12 +65,45 @@ iframe {
 
 .home__content {
   width: 80vw;
-  margin-top: 10vh;
+  margin-top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
   overflow-y: overlay;
+}
+
+.chatHeader {
+  margin-top: 5px;
+  width: 20vw;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #353535;
+  background-color: #ffffff;
+  border: 2px solid #e6e5e5;
+}
+
+.chat {
+  margin-top: 5px;
+  width: 20vw;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #353535;
+  background-color: #ffffff;
+  border: 2px solid #e6e5e5;
+}
+
+.chat img {
+  width: 50px;
+}
+
+.chat h1 {
+  text-align: left;
+  padding-left: 10px;
 }
 
 .message {
@@ -90,6 +125,10 @@ iframe {
   background-color: #ffffff;
   border: 2px solid #e6e5e5;
   border-radius: 10px;
+}
+
+.message:hover {
+  filter: brightness(0.95);
 }
 
 .message_content {
@@ -115,6 +154,7 @@ iframe {
 
   height: fit-content;
   max-height: 210px;
+  line-height: 1.6;
   width: 56vw;
   padding-left: 20px;
   overflow: hidden;
@@ -174,6 +214,7 @@ iframe {
   position: absolute;
   width: 20vw;
   height: 90vh;
+  margin-left: 10px;
   left: 0;
   z-index: 4;
 }
@@ -182,7 +223,11 @@ iframe {
   background-color: var(--color-primary);
   width: 20vw;
   height: 10vh;
+  margin-bottom: 2vh;
+  border-radius: 10px;
+  border: 2px solid #03ac95;
   left: 0;
+  margin-top: 10px;
   z-index: 4;
 
   display: flex;
@@ -191,9 +236,11 @@ iframe {
 }
 
 .home__sidebar_bottom {
-  background-color: #ffffff;
+  background-color: #ededed;
+  border: 2px solid #b9b9b9;
+  border-radius: 10px;
   width: 20vw;
-  height: 90vh;
+  height: 85vh;
   left: 0;
   z-index: 4;
 }
