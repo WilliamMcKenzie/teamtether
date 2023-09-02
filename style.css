@@ -1,6 +1,6 @@
 body {
-  --color-primary: #09D38B;
-  --color-primary-dark: #09B6D3;
+  --color-primary: #BE2F2F;
+  --color-primary-dark: #aa2244;
   --color-secondary: #0951D3;
   --color-error: #cc4333;
   --color-success: #4bb544;
@@ -74,15 +74,38 @@ iframe {
 }
 
 .chatHeader {
-  margin-top: 5px;
   width: 20vw;
   border-radius: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #353535;
-  background-color: #ffffff;
-  border: 2px solid #e6e5e5;
+  color: white;
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.addChatButton {
+  background-color: white;
+  border: 2px solid var(--color-primary-dark);
+  border-radius: 200px;
+  margin-left: auto;
+
+  height: 60px;
+  width: 60px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addChatButton:hover {
+  filter: brightness(0.8);
+}
+
+.addChatIcon {
+  height: 40px;
+  width: 40px;
+  color: var(--color-primary);
 }
 
 .chat {
@@ -115,7 +138,7 @@ iframe {
   height: 700px;
   max-height: 300px;
   align-items: top;
-  text-align: left;
+  align-items: center;
   margin-bottom: 20px;
   margin-top: 10px;
 
@@ -135,6 +158,7 @@ iframe {
   position: relative;
   font-family: 'Trebuchet MS';
   overflow: hidden;
+  text-align: left;
 }
 
 .message_author_info {
@@ -184,12 +208,12 @@ iframe {
   justify-content: center;
   position: absolute;
   bottom: 0;
-  background-color: white;
-  width: 99%;
+  background-color: rgb(243, 243, 243);
+  width: 100%;
   padding-bottom: 16px;
 
   border-top: 4px solid white;
-  ;
+  border-radius: 10px;
 }
 
 .message_icon {
@@ -199,14 +223,14 @@ iframe {
   z-index: 2;
 
   padding-left: 20px;
-  color: #bfbfbf
+  color: #d4d4d4
 }
 
 .message_icon:hover {
   filter: brightness(1.2);
 
 
-  color: rgb(11, 170, 114)
+  color: var(--color-primary-dark);
 }
 
 .home__sidebar {
@@ -225,14 +249,14 @@ iframe {
   height: 10vh;
   margin-bottom: 2vh;
   border-radius: 10px;
-  border: 2px solid #03ac95;
+  border: 2px solid var(--color-primary-dark);
   left: 0;
   margin-top: 10px;
   z-index: 4;
 
   display: flex;
   align-items: center;
-  flex-direction: row-reverse;
+  flex-direction: row;
 }
 
 .home__sidebar_bottom {
@@ -256,11 +280,24 @@ iframe {
   flex-direction: row-reverse;
 }
 
+.home__userInfo__container h1 {
+  color: white;
+  margin-bottom: 0;
+}
+
+.home__userInfo__container p {
+  color: #e6e5e5;
+  margin-top: 5px;
+}
+
 .home__userIcon__container {
-  padding: 0;
+  padding: 10px;
   outline: none;
   border: 1vh solid #ffffff;
-  margin-right: 1vh;
+  border: 2px solid var(--color-primary-dark);
+  border-radius: 10px;
+
+  margin: 0.7vh;
 
   display: flex;
   align-items: center;
@@ -407,7 +444,7 @@ iframe {
 .home__popup-cancel {
   font-family: 'Trebuchet MS';
   font: 400 1rem;
-  background-color: var(--color-error);
+  background-color: var(--color-primary);
   width: 100%;
   padding-bottom: 20px;
   padding-top: 20px;
@@ -422,7 +459,7 @@ iframe {
 }
 
 .home__popup-cancel:hover {
-  background: #bb2955;
+  background: var(--color-primary-dark);
   transform: scale(1.02);
 }
 
@@ -620,5 +657,10 @@ iframe {
 }
 
 body::-webkit-scrollbar {
-  z-index: 10;
+  display: none;
+  position: absolute;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

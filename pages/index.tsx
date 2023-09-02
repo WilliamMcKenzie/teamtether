@@ -5,7 +5,7 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
 
 const fetcher = (url, data) => {
@@ -162,13 +162,19 @@ const TeamTether = () => {
         <button className='home__userIcon__container' onClick={PopupConfig}>
           <img className='home__userIcon' src={curIcon}></img>
         </button>
-        <h1>{user.name}</h1>
+        <div className='home__userInfo__container'>
+          <h1>{user.name}</h1>
+          <p>{chats.length}{chats.length < 2 ? " Chat" : " Chats"}</p>
+        </div>
       </div>
       <div className='home__sidebar_bottom' onClick={GetChats}>
         <div>
-          <div className='chatHeader'>
+          <button className='chatHeader'>
             <h1>Chats</h1>
-          </div>
+            <button className='addChatButton'>
+              <FontAwesomeIcon icon={faPlus} className='addChatIcon'></FontAwesomeIcon>
+            </button>
+          </button>
           {chats.map((chat) => (
             <button onClick={() => GetMessages(chat)} className='chat'>
               <img src={chat.users[0].icon}></img>
