@@ -23,7 +23,7 @@ export default async function handle(req, res) {
     try {
         const { login, password } = req.query;
 
-        const user = await prisma.user.findFirstOrThrow({
+        const user = await prisma.user.findFirst({
             where: {
                 OR: [{ name: login }, { email: login }],
                 password: password,
@@ -32,6 +32,6 @@ export default async function handle(req, res) {
 
         res.json(user);
     } catch (error) {
-        res.json(error)
+        res.json("error")
     }
 }
