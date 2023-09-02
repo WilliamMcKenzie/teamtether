@@ -34,7 +34,7 @@ const TeamTether = () => {
     const Login = async () => {
         var res = await fetcher(`/api/login?login=${loginField}&password=${passwordField}`, false);
 
-        if (!res.name) setError("User not found")
+        if (!res.icon) setError("User not found")
         else router.push({
             pathname: '/',
             query: { user: JSON.stringify(res) }

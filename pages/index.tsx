@@ -41,21 +41,28 @@ const TeamTether = () => {
   }
   else {
     user = { id: '0e16f8f8-cc53-4401-acb3-9c94376255fc', password: '$piderman12', name: 'Will', email: 'williamqmckenzie@gmail.com', icon: 'https://api.dicebear.com/6.x/identicon/svg?seed=9627', role: "ADMIN" }
-    useEffect(() => {
-      router.push('/login')
-    }, [])
+    // useEffect(() => {
+    //   router.push('/login')
+    // }, [])
   }
 
-  var [popupClass, setPopupClass] = useState("home__popup container")
+  var [popupClass, setPopupClass] = useState("home__popup container hidden")
+  var [chatPopupClass, setChatPopupClass] = useState("home__chat_popup container hidden")
   var [curIcon, setCurIcon] = useState(user.icon)
-  var [maskClass, setMaskClass] = useState('mask')
+  var [maskClass, setMaskClass] = useState('mask hidden')
   var [errorMessage, setError] = useState('')
 
+  //user popup
   var [newIcon, setIcon] = useState(user.icon)
   var [newName, setName] = useState(user.name)
   var [newEmail, setEmail] = useState(user.email)
   var [newPassword, setPassword] = useState(user.password)
   const [animated, setAnimated] = useState(false);
+
+  //chat popup
+  var [newChatName, setChatName] = useState("")
+  var [newChatEmail, setChatEmail] = useState("")
+  var [newChatPassword, setChatPassword] = useState("")
 
   const GoToLogin = async () => {
     router.push({
@@ -121,6 +128,51 @@ const TeamTether = () => {
     setPassword(user.password)
   }
 
+  const addChat = () => {
+    setChatPopupClass('home__popup container')
+    setMaskClass('mask')
+  }
+  const CloseAddChat = () => {
+    setChatPopupClass('home__popup container hidden')
+    setMaskClass('mask hidden')
+  }
+  const CreateChat = async () => {
+    if (newChatName.length > 0 && newChatPassword.length > 0) {
+      console.log(`/api/createChat?name=${newChatName}&password=${newChatPassword}&emails=${newChatEmail}`)
+      var res = await fetcher(`/api/createChat?name=${newChatName}&password=${newChatPassword}&emails=${newChatEmail}`, false);
+
+      setError("")
+      if (!res.name) {
+        console.log(res)
+      }
+      else {
+        router.replace({
+          pathname: '/',
+          query: { user: JSON.stringify(res) }
+        }, '/')
+        console.log(user)
+        setChatPopupClass('home__popup container hidden')
+        setMaskClass('mask hidden')
+      }
+    }
+    else {
+      setError("Invalid parameters")
+    }
+  }
+
+  const UpdateChatName = event => {
+    newChatName = event.target.value
+    setChatName(newChatName)
+  }
+  const UpdateChatEmails = event => {
+    newChatEmail = event.target.value
+    setChatEmail(newChatEmail)
+  }
+  const UpdateChatPassword = event => {
+    newChatPassword = event.target.value
+    setChatPassword(newChatPassword)
+  }
+
   return (<div className='home'>
     <div className={maskClass}></div>
 
@@ -157,6 +209,32 @@ const TeamTether = () => {
         <button className="home__popup-cancel" type="button" onClick={CancelUpdate}>Cancel</button>
       </div>
     </div>
+    <div className={chatPopupClass}>
+      <button className='home__popup__close' onClick={CloseAddChat}>
+        <img className='home__popup__close_icon'></img>
+      </button>
+      <h1 className="form__title">Create Chat:</h1>
+      <div className="form__message form__message--error">{errorMessage}</div>
+      <div className="form__input-group home__popup_name_group">
+        <label>Name:</label>
+        <input type="text" className="form__input" onChange={UpdateChatName} autoFocus placeholder="Chat Name"></input>
+        <div className="form__input-error-message"></div>
+      </div>
+      <div className="form__input-group home__popup_name_group">
+        <label>Members Email*:</label>
+        <input type="text" className="form__input" onChange={UpdateChatEmails} autoFocus placeholder="Members Emails (seperated by commas)"></input>
+        <div className="form__input-error-message"></div>
+      </div>
+      <div className="form__input-group home__popup_name_group">
+        <label>Password:</label>
+        <input type="password" className="form__input" onChange={UpdateChatPassword} autoFocus placeholder="Chat password"></input>
+        <div className="form__input-error-message"></div>
+      </div>
+      <div className="home__popup-confirmation">
+        <button className="form__button" type="button" onClick={CreateChat}>Create</button>
+        <button className="home__popup-cancel" type="button" onClick={CloseAddChat}>Cancel</button>
+      </div>
+    </div>
     <div className='home__sidebar'>
       <div className='home__sidebar_top'>
         <button className='home__userIcon__container' onClick={PopupConfig}>
@@ -164,20 +242,20 @@ const TeamTether = () => {
         </button>
         <div className='home__userInfo__container'>
           <h1>{user.name}</h1>
-          <p>{chats.length}{chats.length < 2 ? " Chat" : " Chats"}</p>
+          <p>{chats.length}{chats.length == 1 ? " Chat" : " Chats"}</p>
         </div>
       </div>
       <div className='home__sidebar_bottom' onClick={GetChats}>
         <div>
           <button className='chatHeader'>
             <h1>Chats</h1>
-            <button className='addChatButton'>
+            <button className='addChatButton' onClick={addChat}>
               <FontAwesomeIcon icon={faPlus} className='addChatIcon'></FontAwesomeIcon>
             </button>
           </button>
           {chats.map((chat) => (
             <button onClick={() => GetMessages(chat)} className='chat'>
-              <img src={chat.users[0].icon}></img>
+              <img src={chat.users[0] == true ? chat.users[0].icon : "https://api.dicebear.com/6.x/identicon/svg?seed=9627"}></img>
               <h1>{chat.name}</h1>
             </button>
           ))}

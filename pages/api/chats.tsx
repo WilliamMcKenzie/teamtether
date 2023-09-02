@@ -7,9 +7,18 @@ export default async function handle(req, res) {
         const { name, email, password } = req.query;
 
         const chat = await prisma.chat.findMany({
+            where: {
+                users: {
+                    some: {
+                        name: name,
+                        email: email,
+                        password: password
+                    }
+                }
+            },
             include: {
-                users: true
-            }
+                users: true,
+            },
         });
 
         res.json(chat);

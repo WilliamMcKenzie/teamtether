@@ -40,7 +40,7 @@ const TeamTether = () => {
     const Register = async () => {
         var res = await fetcher(`/api/register?name=${nameField}&email=${emailField}&password=${passwordField}&icon=${`https://api.dicebear.com/6.x/identicon/svg?seed=${Math.floor(Math.random() * 10000)}`}`, false);
 
-        if (!res.name) setError("Email or username & password combination taken")
+        if (!res.icon) setError("Email or username & password combination taken")
         else router.push({
             pathname: '/',
             query: { user: JSON.stringify(res) }
