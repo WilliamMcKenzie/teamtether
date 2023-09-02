@@ -35,8 +35,7 @@ const User: React.FC<{ user: UserProps }> = ({ user }) => {
   const Login = async () => {
     console.log({ login: loginField, password: passwordField })
 
-    if (user) {
-
+    if (user.name) {
       navigate('/home')
     }
     else {
