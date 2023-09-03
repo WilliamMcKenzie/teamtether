@@ -21,15 +21,25 @@ export default async function handle(req, res) {
 
         } else {
 
+            var emailsArray = []
+            emails = emails.replace(" ", "")
+
+            emails = emails.split(",")
+
+            for (let i = 0; i < emails.length; i++) {
+                emailsArray.push({
+                    email: emails[i]
+                });
+            }
+
+
             await prisma.chat.update({
                 where: {
                     id: chat.id
                 },
                 data: {
                     users: {
-                        connect: {
-                            email: emails
-                        }
+                        connect: emailsArray
                     }
                 }
             })

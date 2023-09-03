@@ -19,9 +19,9 @@ const fetcher = (url, data) => {
 const TeamTether = () => {
   const router = useRouter()
   var user
+  var curChat = useRef(0)
   const [chats, setChats] = useState([]);
   const [chatsMessages, setMessages] = useState([]);
-
 
   const GetChats = async () => {
     var chats = await fetcher(`/api/chats?name=${user.name}&email=${user.email}&password=${user.password}`, false);
@@ -29,10 +29,10 @@ const TeamTether = () => {
   }
   const GetMessages = async (chat) => {
     var messages = await fetcher(`/api/texts?id=${chat.id}`, false);
+    curChat.current = chat
+    console.log(curChat)
     setMessages(messages)
-    console.log(chatsMessages)
   }
-
 
   //get user
   if (router.query.user) {
@@ -44,6 +44,11 @@ const TeamTether = () => {
     // useEffect(() => {
     //   router.push('/login')
     // }, [])
+  }
+
+  //get chats
+  if (router.query.chat) {
+    curChat = JSON.parse(router.query.chat as string)
   }
 
   var [popupClass, setPopupClass] = useState("home__popup container hidden")
@@ -138,17 +143,15 @@ const TeamTether = () => {
   }
   const CreateChat = async () => {
     if (newChatName.length > 0 && newChatPassword.length > 0) {
-      console.log(`/api/createChat?name=${newChatName}&password=${newChatPassword}&emails=${newChatEmail}`)
       var res = await fetcher(`/api/createChat?name=${newChatName}&password=${newChatPassword}&emails=${newChatEmail}`, false);
 
-      setError("")
       if (!res.name) {
-        console.log(res)
+        setError("Invalid Parameters")
       }
       else {
         router.replace({
           pathname: '/',
-          query: { user: JSON.stringify(res) }
+          query: { user: JSON.stringify(user) }
         }, '/')
         console.log(user)
         setChatPopupClass('home__popup container hidden')
@@ -156,7 +159,7 @@ const TeamTether = () => {
       }
     }
     else {
-      setError("Invalid parameters")
+      setError("Invalid Parameters")
     }
   }
 
@@ -171,6 +174,10 @@ const TeamTether = () => {
   const UpdateChatPassword = event => {
     newChatPassword = event.target.value
     setChatPassword(newChatPassword)
+  }
+
+  const shareMessage = async (id) => {
+
   }
 
   return (<div className='home'>
@@ -222,7 +229,7 @@ const TeamTether = () => {
       </div>
       <div className="form__input-group home__popup_name_group">
         <label>Members Email*:</label>
-        <input type="text" className="form__input" onChange={UpdateChatEmails} autoFocus placeholder="Members Emails (seperated by commas)"></input>
+        <input type="text" className="form__input" onChange={UpdateChatEmails} autoFocus placeholder="Members Emails *seperated by commas* *optional*"></input>
         <div className="form__input-error-message"></div>
       </div>
       <div className="form__input-group home__popup_name_group">
@@ -255,7 +262,7 @@ const TeamTether = () => {
           </button>
           {chats.map((chat) => (
             <button onClick={() => GetMessages(chat)} className='chat'>
-              <img src={chat.users[0] == true ? chat.users[0].icon : "https://api.dicebear.com/6.x/identicon/svg?seed=9627"}></img>
+              <img src={chat.users[0].icon}></img>
               <h1>{chat.name}</h1>
             </button>
           ))}
@@ -278,9 +285,16 @@ const TeamTether = () => {
             </p>
           </div>
           <div className='message_options'>
-            <FontAwesomeIcon icon={faThumbsUp} className='message_icon'></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faThumbsDown} className='message_icon'></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faShare} className='message_icon'></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faThumbsUp} className='message_icon' onClick={async () => {
+              var res = await fetcher(`/api/likeMessage?id=${message.id}&likes=${message.likes}`, false);
+              GetMessages(curChat.current)
+            }}></FontAwesomeIcon>
+            <h1>{message.likes}</h1>
+            <FontAwesomeIcon icon={faThumbsDown} className='message_icon' onClick={async () => {
+              var res = await fetcher(`/api/dislikeMessage?id=${message.id}&likes=${message.likes}`, false);
+              GetMessages(curChat.current)
+            }}></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faShare} className='message_icon' onClick={shareMessage}></FontAwesomeIcon>
           </div>
         </button>
       ))
