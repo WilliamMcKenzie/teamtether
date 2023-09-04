@@ -117,6 +117,7 @@ const TeamTether = () => {
         setPopupClass("home__popup container hidden")
         setCurIcon(newIcon)
         setMaskClass('')
+        GetMessages(curChat.current)
       }
     }
     else {
