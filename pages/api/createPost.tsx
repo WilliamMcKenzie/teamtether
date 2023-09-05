@@ -9,23 +9,23 @@ export default async function handle(req, res) {
 
         name = name.toString()
 
-        const text = await prisma.text.create({
-            data: {
-                title: name,
-                content: content,
-                chat: {
-                    connect: chat
-                },
-                author: {
-                    connect: author
-                },
-                authorName: author.name,
-                authorIcon: author.icon,
-                authorId: author.id
-            }
-        });
+        // const text = await prisma.text.create({
+        //     data: {
+        //         title: name,
+        //         content: content,
+        //         chat: {
+        //             connect: chat
+        //         },
+        //         author: {
+        //             connect: author
+        //         },
+        //         authorName: author.name,
+        //         authorIcon: author.icon,
+        //         authorId: author.id
+        //     }
+        // });
 
-        res.json(text);
+        // res.json(text);
     } catch (error) {
         res.json("error")
     }
