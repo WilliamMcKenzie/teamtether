@@ -3,11 +3,15 @@ import { useRouter } from 'next/router'
 import Chats from '../components/Chats';
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const fetcher = (url, data) => {
   if (data) {
@@ -31,7 +35,6 @@ const TeamTether = () => {
   const GetMessages = async (chat) => {
     var messages = await fetcher(`/api/texts?id=${chat.id}`, false);
     curChat.current = chat
-    console.log(curChat)
     setMessages(messages)
   }
 
@@ -70,6 +73,9 @@ const TeamTether = () => {
   var [newChatEmail, setChatEmail] = useState("")
   var [newChatPassword, setChatPassword] = useState("")
 
+  //link and image popup
+  var [postClass, setPostClass] = useState('message post')
+
   const GoToLogin = async () => {
     router.push({
       pathname: '/login',
@@ -100,13 +106,10 @@ const TeamTether = () => {
 
   const UpdateUser = async () => {
     if (newName.length > 0 && newEmail.length > 3 && newPassword.length > 0) {
-      console.log(newName.length)
       var res = await fetcher(`/api/update?name=${user.name}&email=${user.email}&password=${user.password}&icon=${user.icon}&newName=${newName}&newEmail=${newEmail}&newPassword=${newPassword}&newIcon=${newIcon}`, false);
 
       setError("")
       if (!res.name) {
-        console.log(res)
-        console.log(user)
       }
       else {
         user = res
@@ -114,7 +117,6 @@ const TeamTether = () => {
           pathname: '/',
           query: { user: JSON.stringify(res) }
         }, '/')
-        console.log(user)
         setPopupClass("home__popup container hidden")
         setCurIcon(newIcon)
         setMaskClass('')
@@ -155,7 +157,6 @@ const TeamTether = () => {
           pathname: '/',
           query: { user: JSON.stringify(user) }
         }, '/')
-        console.log(user)
         setChatPopupClass('home__popup container hidden')
         setMaskClass('mask hidden')
       }
@@ -182,6 +183,7 @@ const TeamTether = () => {
 
   }
 
+
   const SendMessage = async () => {
     var title = document.querySelector(`.postHeader`).textContent
 
@@ -190,18 +192,67 @@ const TeamTether = () => {
     var content = ""
 
     for (var i = 0; i < nodes.length; i++) {
-      console.log(nodes[i].nodeName)
       switch (nodes[i].nodeName) {
         case '#text': content = content + nodes[i].nodeValue; break;
         case 'DIV': nodes[i].childNodes[0].nodeName == "#text" ? content = content + nodes[i].childNodes[0].nodeValue : content = content + '\n'; break;
       }
     }
 
-    // var res = await fetcher(`/api/createPost?name=${title}&content=${content}&chat=${curChat}&author=${user}`, false);
-    console.log(`/api/createPost?name=${title}&content=${content}&chat=${JSON.stringify(curChat.current)}&author=${JSON.stringify(user)}`)
+    var res = await fetcher(`/api/createPost?name=${title}&content=${content}&chat=${JSON.stringify(curChat.current)}&author=${JSON.stringify(user)}`, false);
+    // console.log(`/api/createPost?name=${title}&content=${content}&chat=${JSON.stringify(curChat.current)}&author=${JSON.stringify(user)}`)
   }
 
+  const switchPost = () => {
+    if (postClass.includes("hidden")) {
+      setPostClass('message post')
+
+    } else {
+      setPostClass('message post hidden')
+    }
+  }
+
+  // const PopupImage = () => {
+  //   setImagePopupClass('message__popup container')
+  //   setLinkPopupClass('message__popup container hidden')
+  // }
+  // const ClosePopupImage = () => {
+  //   setImagePopupClass('message__popup container hidden')
+  // }
+  // const AddPopupImage = () => {
+  //   const url = "https://www.bleepstatic.com/content/hl-images/2021/10/05/epic-games-store-logo-header.jpg";
+
+  //   var contentEle = document.querySelector(`.postInput`)
+  //   var newEle = document.createElement("img")
+
+  //   const newLink = contentEle.appendChild(newEle)
+  //   newLink.src = url
+
+  //   setLinkPopupClass('message__popup container hidden')
+  // }
+
+  // const PopupLink = () => {
+  //   setLinkPopupClass('message__popup container')
+  //   setImagePopupClass('message__popup container hidden')
+  // }
+  // const ClosePopupLink = () => {
+  //   setLinkPopupClass('message__popup container hidden')
+  // }
+  // const AddPopupLink = () => {
+  //   const url = "https://developer.mozilla.org/";
+
+  //   var contentEle = document.querySelector(`.postInput`)
+  //   var newEle = document.createElement("a")
+  //   newEle.innerHTML = `${url}`
+
+  //   const newLink = contentEle.appendChild(newEle)
+  //   newLink.href = url
+
+  //   setLinkPopupClass('message__popup container hidden')
+  // }
+
+
   return (<div className='home'>
+    <div className='whiteBg'></div>
     <div className={maskClass}></div>
 
     <div className={popupClass}>
@@ -320,21 +371,37 @@ const TeamTether = () => {
         </button>
       ))
       }
-      <button className='message post'>
+      <button className={postClass}>
+        {/* <div className={imagePopupClass}>
+          <FontAwesomeIcon icon={faXmark} className='message__popup_close' onClick={ClosePopupImage}></FontAwesomeIcon>
+          <div className='message__popup_container'>
+            <input placeholder='Image Url'></input>
+            <FontAwesomeIcon icon={faCheck} onClick={AddPopupImage}></FontAwesomeIcon>
+          </div>
+        </div>
+        <div className={linkPopupClass}>
+          <FontAwesomeIcon icon={faXmark} className='message__popup_close' onClick={ClosePopupLink}></FontAwesomeIcon>
+          <div className='message__popup_container'>
+            <input placeholder='Link Url'></input>
+            <FontAwesomeIcon icon={faCheck} onClick={AddPopupLink}></FontAwesomeIcon>
+          </div>
+        </div> */}
         <div className='message_content'>
           <div className='message_author_info'>
             <div>
-              <h1 className='postHeader' contentEditable="true">Post</h1>
+              <h1 className='postHeader' contentEditable="true" placeholder='Post Title'></h1>
             </div>
           </div>
-          <div className='postInput' contentEditable="true">
-
+          <div className='postInput' contentEditable="true" placeholder='Post Content'>
           </div>
         </div>
         <div className='message_options'>
           <FontAwesomeIcon icon={faPaperPlane} className='message_icon' onClick={SendMessage}></FontAwesomeIcon>
+          {/* <FontAwesomeIcon icon={faImage} className='message_icon' onClick={PopupImage}></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faLink} className='message_icon' onClick={PopupLink}></FontAwesomeIcon> */}
         </div>
       </button>
+      <FontAwesomeIcon icon={faPen} className='openMessage' onClick={switchPost}></FontAwesomeIcon>
     </div>
   </div>)
 }

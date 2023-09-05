@@ -27,7 +27,7 @@ model User {
 model Chat {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
-  password String @unique
+  password String
   chatsIDs String[] @db.ObjectId
   users User[] @relation(fields: [chatsIDs], references: [id])
   texts Text[]

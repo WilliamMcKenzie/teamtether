@@ -18,6 +18,15 @@ body {
   overflow-x: hidden;
 }
 
+.whiteBg {
+  background-color: #F5F6F7;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
 iframe {
   display: none;
 }
@@ -143,7 +152,7 @@ iframe {
 .postInput {
   width: calc(60vw - 12px);
   height: 174px;
-  border: 2px solid #e6e5e5;
+  border: 2px solid #d7d7d7;
   border-bottom: none;
   outline: none;
   padding: 0;
@@ -165,8 +174,27 @@ iframe {
   overflow-x: scroll !important;
 }
 
-.message {
-  position: relative;
+.openMessage {
+  padding: 10px;
+  height: 40px;
+  width: 40px;
+  z-index: 1;
+  background: white;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  color: #d4d4d4;
+  border: 2px solid #d7d7d7;
+}
+
+.openMessage:hover {
+  color: var(--color-primary);
+  filter: brightness(0.90);
+}
+
+.postMessage {
+  position: absolute;
 
   display: flex;
   flex-direction: column;
@@ -182,8 +210,30 @@ iframe {
   color: #353535;
 
   background-color: #ffffff;
-  border: 2px solid #e6e5e5;
+  border: 2px solid #d7d7d7;
   border-radius: 10px;
+  z-index: 10;
+}
+
+.message {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  height: 700px;
+  max-height: 300px;
+  align-items: top;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+
+  padding-bottom: 80px;
+  color: #353535;
+
+  background-color: #ffffff;
+  border: 2px solid #d7d7d7;
+  border-radius: 10px;
+  z-index: 1;
 }
 
 .message:hover {
@@ -242,6 +292,23 @@ iframe {
   z-index: 1;
 }
 
+.postMessage_options {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+
+  width: 96%;
+  padding-bottom: 16px;
+
+  border-top: 2px solid rgb(224, 224, 224);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: white;
+  align-items: center;
+  z-index: 10;
+}
+
 .message_options {
   display: flex;
   justify-content: center;
@@ -256,6 +323,7 @@ iframe {
   align-items: center;
 }
 
+
 .message_options h1 {
   color: #d4d4d4;
   width: 40px;
@@ -268,20 +336,21 @@ iframe {
   width: 40px;
   height: 40px;
   margin: 10px;
+  padding: 7.5px;
   z-index: 2;
+  border-radius: 10px;
 
   color: #d4d4d4
 }
 
 .message_icon:hover {
   filter: brightness(1.2);
-
+  background-color: rgb(191, 191, 191);
 
   color: var(--color-primary-dark);
 }
 
 .home__sidebar {
-  background-color: #ffffff;
   position: absolute;
   width: 20vw;
   height: 90vh;
@@ -297,6 +366,7 @@ iframe {
   margin-bottom: 2vh;
   border-radius: 10px;
   border: 2px solid var(--color-primary-dark);
+  box-shadow: 0 7px 10px -6px gray;
   left: 0;
   margin-top: 10px;
   z-index: 4;
@@ -374,6 +444,71 @@ iframe {
   right: 0;
   text-align: center;
   z-index: 10;
+}
+
+.message__popup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 20vh;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 100px;
+  right: 50px;
+  text-align: center;
+  z-index: 10;
+
+  width: fit-content !important;
+  height: fit-content !important;
+  padding: 10px;
+
+  box-shadow: none !important;
+
+  border: 2px solid #d7d7d7;
+  border-top: 30px solid #eeee;
+}
+
+.message__popup_container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.message__popup input {
+  width: 80px;
+  height: 20px;
+  margin: 7.5px;
+  outline: none;
+  border: 2px solid #eeee;
+  border-radius: 10px;
+  padding: 2.5px;
+  padding-left: 10px;
+}
+
+.message__popup svg {
+  width: 20px;
+  padding: 7.5px;
+  border-radius: 10px;
+  padding-top: 2.5px;
+  padding-bottom: 2.5px;
+  background-color: rgb(244, 244, 244);
+  color: #bdb8b8ee;
+}
+
+.message__popup svg:hover {
+  background-color: white;
+  filter: brightness(0.95);
+}
+
+.message__popup_close {
+  position: absolute;
+  top: -37.5px;
+  right: 5px;
+  background-color: #eeee !important;
+}
+
+.message__popup_close:hover {
+  filter: brightness(1.1) !important;
 }
 
 .home__popup {
