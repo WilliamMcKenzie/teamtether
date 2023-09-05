@@ -50,6 +50,14 @@ iframe {
   right: 0;
 }
 
+.fade {
+  position: absolute;
+  bottom: 0px;
+  width: 100vw;
+  box-shadow: 0 0 75vh 75px black;
+  z-index: 1;
+}
+
 .container {
   width: 80vw;
   max-width: 800px;
@@ -73,13 +81,12 @@ iframe {
 }
 
 .home__content {
-  width: 80vw;
+  width: 79vw;
   margin-top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
-  overflow-y: overlay;
 }
 
 .chatHeader {
@@ -178,7 +185,7 @@ iframe {
   padding: 10px;
   height: 40px;
   width: 40px;
-  z-index: 1;
+  z-index: 5;
   background: white;
   border-radius: 10px;
   position: absolute;
@@ -577,7 +584,7 @@ iframe {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  top: -7vh;
+  top: -8vh;
   left: 0;
   right: 0;
 }
@@ -595,7 +602,7 @@ iframe {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  top: 4vh;
+  top: 6vh;
   left: 0;
   right: 0;
 }
@@ -740,6 +747,23 @@ iframe {
 
 .home__messages__userIcon {
   width: 4vw;
+}
+
+.circle {
+  background-color: #dddddd;
+  border-radius: 50px;
+  width: 20px !important;
+  margin: 2.5px;
+}
+
+.square {
+  width: 20px !important;
+  margin: 2.5px;
+}
+
+.userIcon_container {
+  display: grid;
+  grid-template-columns: auto auto;
 }
 
 

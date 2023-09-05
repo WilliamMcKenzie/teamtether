@@ -35,7 +35,9 @@ const TeamTether = () => {
   const GetMessages = async (chat) => {
     var messages = await fetcher(`/api/texts?id=${chat.id}`, false);
     curChat.current = chat
+    var objDiv = document.getElementById("content");
     setMessages(messages)
+    objDiv.scrollTop = objDiv.scrollHeight;
   }
 
   //get user
@@ -74,7 +76,8 @@ const TeamTether = () => {
   var [newChatPassword, setChatPassword] = useState("")
 
   //link and image popup
-  var [postClass, setPostClass] = useState('message post')
+  var [postClass, setPostClass] = useState('postMessage post hidden')
+  var [fadeClass, setFadeClass] = useState('fade hidden')
 
   const GoToLogin = async () => {
     router.push({
@@ -192,22 +195,28 @@ const TeamTether = () => {
     var content = ""
 
     for (var i = 0; i < nodes.length; i++) {
+      console.log(nodes[i].nodeName)
       switch (nodes[i].nodeName) {
         case '#text': content = content + nodes[i].nodeValue; break;
         case 'DIV': nodes[i].childNodes[0].nodeName == "#text" ? content = content + nodes[i].childNodes[0].nodeValue : content = content + '\n'; break;
+        case 'SPAN': content = content + nodes[i].childNodes[0].nodeValue; break;
       }
     }
 
+
     var res = await fetcher(`/api/createPost?name=${title}&content=${content}&chat=${JSON.stringify(curChat.current)}&author=${JSON.stringify(user)}`, false);
-    // console.log(`/api/createPost?name=${title}&content=${content}&chat=${JSON.stringify(curChat.current)}&author=${JSON.stringify(user)}`)
+    setPostClass('postMessage post hidden')
+    setFadeClass('fade hidden')
+    GetMessages(curChat.current)
   }
 
   const switchPost = () => {
     if (postClass.includes("hidden")) {
-      setPostClass('message post')
-
+      setPostClass('postMessage post')
+      setFadeClass('fade')
     } else {
-      setPostClass('message post hidden')
+      setPostClass('postMessage post hidden')
+      setFadeClass('fade hidden')
     }
   }
 
@@ -334,42 +343,49 @@ const TeamTether = () => {
           </button>
           {chats.map((chat) => (
             <button onClick={() => GetMessages(chat)} className='chat'>
-              <img src={chat.users[0].icon}></img>
+              {chat.users.length == 1 ? <img src={chat.users[0].icon}></img> : <div className='userIcon_container'>
+                <img src={chat.users[0] ? chat.users[0].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={chat.users[0] ? "square" : "circle"}></img>
+                <img src={chat.users[1] ? chat.users[1].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={chat.users[1] ? "square" : "circle"}></img>
+                <img src={chat.users[2] ? chat.users[2].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={chat.users[2] ? "square" : "circle"}></img>
+                <img src={chat.users[3] ? chat.users[3].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={chat.users[3] ? "square" : "circle"}></img>
+              </div>}
               <h1>{chat.name}</h1>
             </button>
           ))}
         </div>
       </div>
     </div>
-    <div className='home__content'>
-      {chatsMessages.map((message) => (
-        <button className='message'>
-          <div className='message_content'>
-            <div className='message_author_info'>
-              <img src={message.authorIcon}></img>
-              <div>
-                <h1>{message.title}</h1>
-                <p className='noPadding'>Posted by {message.authorName}</p>
+    <div className='home__content' id='content'>
+      {chatsMessages.map((message) => {
+        return (
+          <button className='message'>
+            <div className='message_content'>
+              <div className='message_author_info'>
+                <img src={message.authorIcon}></img>
+                <div>
+                  <h1>{message.title}</h1>
+                  <p className='noPadding'>Posted by {message.authorName}</p>
+                </div>
               </div>
+              <p>{message.content}
+                {message.content == true && message.content.length < 400 ? <div /> : <div className='bottom_gradient'></div>}
+              </p>
             </div>
-            <p>{message.content}
-              {message.content.length < 400 ? <div /> : <div className='bottom_gradient'></div>}
-            </p>
-          </div>
-          <div className='message_options'>
-            <FontAwesomeIcon icon={faThumbsUp} className='message_icon' onClick={async () => {
-              var res = await fetcher(`/api/likeMessage?id=${message.id}&likes=${message.likes}`, false);
-              GetMessages(curChat.current)
-            }}></FontAwesomeIcon>
-            <h1>{message.likes}</h1>
-            <FontAwesomeIcon icon={faThumbsDown} className='message_icon' onClick={async () => {
-              var res = await fetcher(`/api/dislikeMessage?id=${message.id}&likes=${message.likes}`, false);
-              GetMessages(curChat.current)
-            }}></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faShare} className='message_icon' onClick={shareMessage}></FontAwesomeIcon>
-          </div>
-        </button>
-      ))
+            <div className='message_options'>
+              <FontAwesomeIcon icon={faThumbsUp} className='message_icon' onClick={async () => {
+                var res = await fetcher(`/api/likeMessage?id=${message.id}&likes=${message.likes}`, false);
+                GetMessages(curChat.current)
+              }}></FontAwesomeIcon>
+              <h1>{message.likes}</h1>
+              <FontAwesomeIcon icon={faThumbsDown} className='message_icon' onClick={async () => {
+                var res = await fetcher(`/api/dislikeMessage?id=${message.id}&likes=${message.likes}`, false);
+                GetMessages(curChat.current)
+              }}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faShare} className='message_icon' onClick={shareMessage}></FontAwesomeIcon>
+            </div>
+          </button>
+        )
+      })
       }
       <button className={postClass}>
         {/* <div className={imagePopupClass}>
@@ -389,10 +405,11 @@ const TeamTether = () => {
         <div className='message_content'>
           <div className='message_author_info'>
             <div>
-              <h1 className='postHeader' contentEditable="true" placeholder='Post Title'></h1>
+              <h1 className='postHeader' contentEditable="true" placeholder='Post Title'>Post Title</h1>
             </div>
           </div>
           <div className='postInput' contentEditable="true" placeholder='Post Content'>
+            Post Content
           </div>
         </div>
         <div className='message_options'>
@@ -403,6 +420,7 @@ const TeamTether = () => {
       </button>
       <FontAwesomeIcon icon={faPen} className='openMessage' onClick={switchPost}></FontAwesomeIcon>
     </div>
+    <div className={fadeClass}></div>
   </div>)
 }
 
