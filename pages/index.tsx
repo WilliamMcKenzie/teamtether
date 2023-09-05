@@ -7,6 +7,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const fetcher = (url, data) => {
   if (data) {
@@ -181,6 +182,25 @@ const TeamTether = () => {
 
   }
 
+  const SendMessage = async () => {
+    var title = document.querySelector(`.postHeader`).textContent
+
+    var contentEle = document.querySelector(`.postInput`)
+    var nodes = contentEle.childNodes
+    var content = ""
+
+    for (var i = 0; i < nodes.length; i++) {
+      console.log(nodes[i].nodeName)
+      switch (nodes[i].nodeName) {
+        case '#text': content = content + nodes[i].nodeValue; break;
+        case 'DIV': nodes[i].childNodes[0].nodeName == "#text" ? content = content + nodes[i].childNodes[0].nodeValue : content = content + '\n'; break;
+      }
+    }
+
+    // var res = await fetcher(`/api/createPost?name=${title}&content=${content}&chat=${curChat}&author=${user}`, false);
+    console.log(`/api/createPost?name=${title}&content=${content}&chat=${JSON.stringify(curChat.current)}&author=${JSON.stringify(user)}`)
+  }
+
   return (<div className='home'>
     <div className={maskClass}></div>
 
@@ -256,7 +276,7 @@ const TeamTether = () => {
       <div className='home__sidebar_bottom' onClick={GetChats}>
         <div>
           <button className='chatHeader'>
-            <h1>Chats</h1>
+            <h1>Teams</h1>
             <button className='addChatButton' onClick={addChat}>
               <FontAwesomeIcon icon={faPlus} className='addChatIcon'></FontAwesomeIcon>
             </button>
@@ -300,6 +320,21 @@ const TeamTether = () => {
         </button>
       ))
       }
+      <button className='message post'>
+        <div className='message_content'>
+          <div className='message_author_info'>
+            <div>
+              <h1 className='postHeader' contentEditable="true">Post</h1>
+            </div>
+          </div>
+          <div className='postInput' contentEditable="true">
+
+          </div>
+        </div>
+        <div className='message_options'>
+          <FontAwesomeIcon icon={faPaperPlane} className='message_icon' onClick={SendMessage}></FontAwesomeIcon>
+        </div>
+      </button>
     </div>
   </div>)
 }
