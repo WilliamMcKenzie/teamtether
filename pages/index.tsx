@@ -24,7 +24,7 @@ const fetcher = (url, data) => {
 const TeamTether = () => {
   const router = useRouter()
   var user
-  var curChat = useRef()
+  var curChat = useRef({ users: null, name: "" })
   const [chats, setChats] = useState([]);
   const [chatsMessages, setMessages] = useState([]);
 
@@ -263,7 +263,7 @@ const TeamTether = () => {
   return (<div className='home'>
     <div className='home__navbar'>
       <div>
-        {curChat.current ? <button className='currentChatHeader'>
+        {curChat.current.users ? <button className='currentChatHeader'>
           {curChat.current.users.length == 1 ? <img src={curChat.current.users[0].icon}></img> : <div className='userIcon_container'>
             <img src={curChat.current.users[0] ? curChat.current.users[0].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[0] ? "square" : "circle"}></img>
             <img src={curChat.current.users[1] ? curChat.current.users[1].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[1] ? "square" : "circle"}></img>
