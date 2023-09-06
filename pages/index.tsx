@@ -8,7 +8,7 @@ import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +24,7 @@ const fetcher = (url, data) => {
 const TeamTether = () => {
   const router = useRouter()
   var user
-  var curChat = useRef(0)
+  var curChat = useRef()
   const [chats, setChats] = useState([]);
   const [chatsMessages, setMessages] = useState([]);
 
@@ -47,9 +47,9 @@ const TeamTether = () => {
   }
   else {
     user = { id: '0e16f8f8-cc53-4401-acb3-9c94376255fc', password: '$piderman12', name: 'Will', email: 'williamqmckenzie@gmail.com', icon: 'https://api.dicebear.com/6.x/identicon/svg?seed=9627', role: "ADMIN" }
-    // useEffect(() => {
-    //   router.push('/login')
-    // }, [])
+    useEffect(() => {
+      router.push('/login')
+    }, [])
   }
 
   //get chats
@@ -153,7 +153,7 @@ const TeamTether = () => {
       var res = await fetcher(`/api/createChat?name=${newChatName}&password=${newChatPassword}&emails=${newChatEmail}`, false);
 
       if (!res.name) {
-        setError("Invalid Parameters")
+        setError("Invalid Users")
       }
       else {
         router.replace({
@@ -261,6 +261,20 @@ const TeamTether = () => {
 
 
   return (<div className='home'>
+    <div className='home__navbar'>
+      <div>
+        {curChat.current ? <button className='currentChatHeader'>
+          {curChat.current.users.length == 1 ? <img src={curChat.current.users[0].icon}></img> : <div className='userIcon_container'>
+            <img src={curChat.current.users[0] ? curChat.current.users[0].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[0] ? "square" : "circle"}></img>
+            <img src={curChat.current.users[1] ? curChat.current.users[1].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[1] ? "square" : "circle"}></img>
+            <img src={curChat.current.users[2] ? curChat.current.users[2].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[2] ? "square" : "circle"}></img>
+            <img src={curChat.current.users[3] ? curChat.current.users[3].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[3] ? "square" : "circle"}></img>
+          </div>}
+          <h1>{curChat.current.name}</h1>
+          <FontAwesomeIcon className='gear' icon={faGear}></FontAwesomeIcon>
+        </button> : <div />}
+      </div>
+    </div>
     <div className='whiteBg'></div>
     <div className={maskClass}></div>
 
@@ -368,7 +382,7 @@ const TeamTether = () => {
                 </div>
               </div>
               <p>{message.content}
-                {message.content == true && message.content.length < 400 ? <div /> : <div className='bottom_gradient'></div>}
+                {message.content.length < 1200 ? <div /> : <div className='bottom_gradient'></div>}
               </p>
             </div>
             <div className='message_options'>
