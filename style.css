@@ -88,6 +88,7 @@ iframe {
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
+  z-index: 2;
 }
 
 .chatHeader {
@@ -101,6 +102,7 @@ iframe {
   border: 2px solid var(--color-primary);
   position: fixed;
   top: 15vh;
+  font-family: 'Inter';
 }
 
 .addChatButton {
@@ -141,6 +143,8 @@ iframe {
   overflow-x: hidden;
   height: 100%;
   padding-left: 20px;
+  font-family: 'Inter';
+  font-weight: bold;
 }
 
 .currentChatHeader .userIcon_container {
@@ -185,6 +189,7 @@ iframe {
   border: 2px solid #e6e5e5;
   overflow-x: scroll;
   white-space: nowrap;
+  font-family: 'Inter';
 }
 
 .chat:hover {
@@ -200,6 +205,8 @@ iframe {
   text-align: left;
   padding-left: 10px;
   overflow: visible;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .post {
@@ -277,32 +284,30 @@ iframe {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 60vw;
+  width: fit-content;
   height: 700px;
   max-height: 400px;
-  align-items: top;
-  align-items: center;
-  margin-bottom: 20px;
-  margin-top: 10px;
-
+  margin-bottom: 10px;
+  margin-top: 20px;
   padding-bottom: 80px;
   color: #353535;
-
   background-color: #ffffff;
-  border: 2px solid #d7d7d7;
+  border: none;
   border-radius: 10px;
   z-index: 1;
+  align-items: center;
 }
 
 .message:hover {
-  filter: brightness(0.95);
+  filter: brightness(0.99);
 }
 
 .message_content {
   position: relative;
-  font-family: 'Trebuchet MS';
+  font-family: 'Inter';
   overflow: hidden;
   text-align: left;
+  margin: 10px;
 }
 
 .message_author_info {
@@ -374,7 +379,7 @@ iframe {
   justify-content: center;
   position: absolute;
   bottom: 0;
-  background-color: rgb(243, 243, 243);
+  background-color: rgb(255, 255, 255);
   width: 100%;
   padding-bottom: 16px;
 
@@ -444,7 +449,7 @@ iframe {
   background-color: #ededed;
   border-top: none;
   border-radius: 10px;
-  width: 25vw;
+  width: 22vw;
   height: 75vh;
   padding-top: 10vh;
   left: 0;
@@ -463,6 +468,7 @@ iframe {
 .home__sidebar_bottom label {
   width: 20vw;
   height: 0vh;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -475,11 +481,11 @@ iframe {
   height: 10vh;
   top: 0px;
   background-color: #ffffff;
-
   position: absolute;
   display: flex;
   flex-direction: row-reverse;
-  z-index: 2;
+  z-index: 4;
+  border-bottom: 20px solid #F5F6F7;
 }
 
 .home__userInfo__container h1 {
@@ -490,6 +496,7 @@ iframe {
 .home__userInfo__container p {
   color: #e6e5e5;
   margin-top: 5px;
+  font-family: 'Inter';
 }
 
 .home__userIcon__container {
@@ -729,7 +736,7 @@ iframe {
 }
 
 .home__popup-cancel {
-  font-family: 'Trebuchet MS';
+  font-family: 'Inter';
   font: 400 1rem;
   background-color: var(--color-primary);
   width: 100%;
@@ -959,6 +966,11 @@ iframe {
 @font-face {
   font-family: 'Inter';
   src: url('./icons/Inter-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'CodeFont';
+  src: url('./icons/JetBrainsMono-Regular.ttf');
 }
 
 ::-webkit-input-placeholder {
