@@ -83,12 +83,11 @@ const TeamTether = () => {
   var [newChatPassword, setChatPassword] = useState("")
 
   //edit chat popup 
-  var [newEditChatName, setEditChatName] = useState("")
-  var [newEditChatEmail, setEditChatEmail] = useState("")
-  var [newEditChatPassword, setEditChatPassword] = useState("")
+  var [homeContentClass, setHomeContentClass] = useState("home__content")
 
   //link and image popup
   var [postClass, setPostClass] = useState('postMessage post hidden')
+  var [fadeClass, setFadeClass] = useState('fade hidden')
 
   const GoToLogin = async () => {
     router.push({
@@ -251,14 +250,19 @@ const TeamTether = () => {
 
     var res = await fetcher(`/api/createPost?name=${title}&content=${content}&chat=${JSON.stringify(curChat.current)}&author=${JSON.stringify(user)}`, false);
     setPostClass('postMessage post hidden')
+    setFadeClass('fade hidden')
     GetMessages(curChat.current)
   }
 
   const switchPost = () => {
     if (postClass.includes("hidden")) {
       setPostClass('postMessage post')
+      setFadeClass('fade')
+      setHomeContentClass("home__content")
     } else {
       setPostClass('postMessage post hidden')
+      setFadeClass('fade hidden')
+      setHomeContentClass("home__content znone")
     }
   }
 
@@ -439,7 +443,7 @@ const TeamTether = () => {
         </div>
       </div>
     </div>
-    <div className='home__content' id='content'>
+    <div className={homeContentClass} id='content'>
       {chatsMessages.map((message) => {
         return (
           <button className='message'>
@@ -504,6 +508,7 @@ const TeamTether = () => {
       </button>
       <FontAwesomeIcon icon={faPen} className='openMessage' onClick={switchPost}></FontAwesomeIcon>
     </div>
+    <div className={fadeClass}></div>
   </div>)
 }
 

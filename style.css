@@ -51,11 +51,22 @@ iframe {
 }
 
 .fade {
+  z-index: 4;
+  opacity: 0.1;
+  background-color: black;
   position: absolute;
-  bottom: 0px;
   width: 100vw;
-  box-shadow: 0 0 75vh 75px black;
-  z-index: 1;
+  height: 100vh;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.znone {
+  z-index: 2;
 }
 
 .container {
@@ -88,7 +99,6 @@ iframe {
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
-  z-index: 2;
 }
 
 .chatHeader {
@@ -98,8 +108,9 @@ iframe {
   flex-direction: row;
   align-items: center;
   color: white;
-  background-color: var(--color-primary);
-  border: 2px solid var(--color-primary);
+  background: rgb(190, 47, 47);
+  background: linear-gradient(90deg, rgba(190, 47, 47, 1) 0%, rgba(231, 77, 142, 1) 100%);
+  border: none;
   position: fixed;
   top: 15vh;
   font-family: 'Inter';
@@ -107,7 +118,7 @@ iframe {
 
 .addChatButton {
   background-color: white;
-  border: 2px solid var(--color-primary-dark);
+  border: none;
   border-radius: 200px;
   margin-left: auto;
 
@@ -126,7 +137,7 @@ iframe {
 .addChatIcon {
   height: 40px;
   width: 40px;
-  color: var(--color-primary);
+  color: rgba(231, 77, 142, 1);
 }
 
 .currentChatHeader {
@@ -186,7 +197,7 @@ iframe {
   align-items: center;
   color: #353535;
   background-color: #ffffff;
-  border: 2px solid #e6e5e5;
+  border: 2px solid #ffffff;
   overflow-x: scroll;
   white-space: nowrap;
   font-family: 'Inter';
@@ -215,9 +226,9 @@ iframe {
 }
 
 .postInput {
-  width: calc(60vw - 12px);
-  height: 174px;
-  border: 2px solid #d7d7d7;
+  width: calc(65vw - 12px);
+  height: 100px;
+  border-top: 2px solid #d7d7d7;
   border-bottom: none;
   outline: none;
   padding: 0;
@@ -229,7 +240,7 @@ iframe {
 }
 
 .postHeader {
-  width: calc(60vw - 12px) !important;
+  width: calc(65vw - 12px) !important;
   max-width: calc(60vw - 12px) !important;
   max-height: 31px;
   outline: none;
@@ -243,14 +254,13 @@ iframe {
   padding: 10px;
   height: 40px;
   width: 40px;
-  z-index: 5;
+  z-index: 12;
   background: white;
   border-radius: 10px;
   position: absolute;
   bottom: 50px;
   right: 50px;
   color: #d4d4d4;
-  border: 2px solid #d7d7d7;
 }
 
 .openMessage:hover {
@@ -260,22 +270,18 @@ iframe {
 
 .postMessage {
   position: absolute;
-
   display: flex;
   flex-direction: column;
-  width: 60vw;
+  width: 65vw;
   height: 700px;
-  max-height: 400px;
-  align-items: top;
+  max-height: 250px;
   align-items: center;
   margin-bottom: 20px;
   margin-top: 10px;
-
   padding-bottom: 80px;
   color: #353535;
-
   background-color: #ffffff;
-  border: 2px solid #d7d7d7;
+  border: none;
   border-radius: 10px;
   z-index: 10;
 }
@@ -313,6 +319,7 @@ iframe {
 .message_author_info {
   display: flex;
   margin-left: 10px;
+  border-radius: 10px;
 }
 
 .message_author_info p {
@@ -374,6 +381,7 @@ iframe {
   z-index: 10;
 }
 
+
 .message_options {
   display: flex;
   justify-content: center;
@@ -429,12 +437,12 @@ iframe {
 }
 
 .home__sidebar_top {
-  background-color: var(--color-primary);
+  background: rgb(190, 47, 47);
+  background: linear-gradient(90deg, rgba(190, 47, 47, 1) 0%, rgba(231, 77, 142, 1) 100%);
   width: 20vw;
   height: 10vh;
   margin-bottom: 2vh;
   border-radius: 10px;
-  border: 2px solid var(--color-primary-dark);
   box-shadow: 0 7px 10px -6px gray;
   left: 0;
   margin-top: 10px;
