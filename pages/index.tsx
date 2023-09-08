@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router'
-import Chats from '../components/Chats';
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -24,9 +23,10 @@ const fetcher = (url, data) => {
 const TeamTether = () => {
   const router = useRouter()
   var user
-  var curChat = useRef({ users: null, name: "" })
+  var curChat = useRef({ users: null, name: "", password: "", id: "" })
+  var [currentChatName, setCurChatName] = useState("")
   const [chats, setChats] = useState([]);
-  const [chatsMessages, setMessages] = useState([]);
+  var [chatsMessages, setMessages] = useState([]);
 
   const GetChats = async () => {
     var chats = await fetcher(`/api/chats?name=${user.name}&email=${user.email}&password=${user.password}`, false);
@@ -35,8 +35,12 @@ const TeamTether = () => {
   const GetMessages = async (chat) => {
     var messages = await fetcher(`/api/texts?id=${chat.id}`, false);
     curChat.current = chat
+    chat.id ? setMessages(messages) : setMessages([])
+    chat.id ? chatsMessages = messages : chatsMessages = []
+    currentChatName = curChat.current.name
+    setCurChatName(curChat.current.name)
+
     var objDiv = document.getElementById("content");
-    setMessages(messages)
     objDiv.scrollTop = objDiv.scrollHeight;
   }
 
@@ -44,6 +48,7 @@ const TeamTether = () => {
   if (router.query.user) {
     user = JSON.parse(router.query.user as string)
     GetChats()
+
   }
   else {
     user = { id: '0e16f8f8-cc53-4401-acb3-9c94376255fc', password: '$piderman12', name: 'Will', email: 'williamqmckenzie@gmail.com', icon: 'https://api.dicebear.com/6.x/identicon/svg?seed=9627', role: "ADMIN" }
@@ -55,10 +60,12 @@ const TeamTether = () => {
   //get chats
   if (router.query.chat) {
     curChat = JSON.parse(router.query.chat as string)
+
   }
 
   var [popupClass, setPopupClass] = useState("home__popup container hidden")
   var [chatPopupClass, setChatPopupClass] = useState("home__chat_popup container hidden")
+  var [editChatPopupClass, setEditChatPopupClass] = useState("home__chat_popup container hidden")
   var [curIcon, setCurIcon] = useState(user.icon)
   var [maskClass, setMaskClass] = useState('mask hidden')
   var [errorMessage, setError] = useState('')
@@ -75,9 +82,13 @@ const TeamTether = () => {
   var [newChatEmail, setChatEmail] = useState("")
   var [newChatPassword, setChatPassword] = useState("")
 
+  //edit chat popup 
+  var [newEditChatName, setEditChatName] = useState("")
+  var [newEditChatEmail, setEditChatEmail] = useState("")
+  var [newEditChatPassword, setEditChatPassword] = useState("")
+
   //link and image popup
   var [postClass, setPostClass] = useState('postMessage post hidden')
-  var [fadeClass, setFadeClass] = useState('fade hidden')
 
   const GoToLogin = async () => {
     router.push({
@@ -109,21 +120,22 @@ const TeamTether = () => {
 
   const UpdateUser = async () => {
     if (newName.length > 0 && newEmail.length > 3 && newPassword.length > 0) {
+      console.log(chatsMessages.length);
       var res = await fetcher(`/api/update?name=${user.name}&email=${user.email}&password=${user.password}&icon=${user.icon}&newName=${newName}&newEmail=${newEmail}&newPassword=${newPassword}&newIcon=${newIcon}`, false);
-
+      router.replace({
+        pathname: '/',
+        query: { user: JSON.stringify(res) }
+      }, '/')
+      GetMessages(curChat.current)
       setError("")
+
       if (!res.name) {
       }
       else {
         user = res
-        router.replace({
-          pathname: '/',
-          query: { user: JSON.stringify(res) }
-        }, '/')
         setPopupClass("home__popup container hidden")
         setCurIcon(newIcon)
         setMaskClass('')
-        GetMessages(curChat.current)
       }
     }
     else {
@@ -182,6 +194,39 @@ const TeamTether = () => {
     setChatPassword(newChatPassword)
   }
 
+  //edit chat
+  const OpenEditChat = () => {
+    setEditChatPopupClass('home__popup container')
+    setMaskClass('mask')
+    newChatName = curChat.current.name
+    setChatName(curChat.current.name)
+
+    newChatPassword = curChat.current.password
+    setChatPassword(curChat.current.password)
+  }
+  const CloseEditChat = () => {
+    setEditChatPopupClass('home__popup container hidden')
+    setMaskClass('mask hidden')
+  }
+  const EditChat = async () => {
+    var res = await fetcher(`/api/editChat?name=${newChatName}&password=${newChatPassword}&id=${curChat.current.id}`, false);
+
+    if (!res.name) {
+      setError("Invalid Users")
+    }
+    else {
+      router.replace({
+        pathname: '/',
+        query: { user: JSON.stringify(user) }
+      }, '/')
+      setEditChatPopupClass('home__popup container hidden')
+      setMaskClass('mask hidden')
+
+      currentChatName = curChat.current.name
+      setCurChatName(curChat.current.name)
+    }
+  }
+
   const shareMessage = async (id) => {
 
   }
@@ -206,17 +251,14 @@ const TeamTether = () => {
 
     var res = await fetcher(`/api/createPost?name=${title}&content=${content}&chat=${JSON.stringify(curChat.current)}&author=${JSON.stringify(user)}`, false);
     setPostClass('postMessage post hidden')
-    setFadeClass('fade hidden')
     GetMessages(curChat.current)
   }
 
   const switchPost = () => {
     if (postClass.includes("hidden")) {
       setPostClass('postMessage post')
-      setFadeClass('fade')
     } else {
       setPostClass('postMessage post hidden')
-      setFadeClass('fade hidden')
     }
   }
 
@@ -264,14 +306,14 @@ const TeamTether = () => {
     <div className='home__navbar'>
       <div>
         {curChat.current.users ? <button className='currentChatHeader'>
-          {curChat.current.users.length == 1 ? <img src={curChat.current.users[0].icon}></img> : <div className='userIcon_container'>
+          <h1>{currentChatName}</h1>
+          {/* {curChat.current.users.length == 1 ? <img src={curChat.current.users[0].icon}></img> : <div className='userIcon_container'>
             <img src={curChat.current.users[0] ? curChat.current.users[0].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[0] ? "square" : "circle"}></img>
             <img src={curChat.current.users[1] ? curChat.current.users[1].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[1] ? "square" : "circle"}></img>
             <img src={curChat.current.users[2] ? curChat.current.users[2].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[2] ? "square" : "circle"}></img>
             <img src={curChat.current.users[3] ? curChat.current.users[3].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={curChat.current.users[3] ? "square" : "circle"}></img>
-          </div>}
-          <h1>{curChat.current.name}</h1>
-          <FontAwesomeIcon className='gear' icon={faGear}></FontAwesomeIcon>
+          </div>} */}
+          <FontAwesomeIcon className='gear' icon={faGear} onClick={OpenEditChat}></FontAwesomeIcon>
         </button> : <div />}
       </div>
     </div>
@@ -315,7 +357,7 @@ const TeamTether = () => {
       <button className='home__popup__close' onClick={CloseAddChat}>
         <img className='home__popup__close_icon'></img>
       </button>
-      <h1 className="form__title">Create Chat:</h1>
+      <h1 className="form__title">Create Team:</h1>
       <div className="form__message form__message--error">{errorMessage}</div>
       <div className="form__input-group home__popup_name_group">
         <label>Name:</label>
@@ -337,6 +379,27 @@ const TeamTether = () => {
         <button className="home__popup-cancel" type="button" onClick={CloseAddChat}>Cancel</button>
       </div>
     </div>
+    <div className={editChatPopupClass}>
+      <button className='home__popup__close' onClick={CloseEditChat}>
+        <img className='home__popup__close_icon'></img>
+      </button>
+      <h1 className="form__title">Edit Team:</h1>
+      <div className="form__message form__message--error">{errorMessage}</div>
+      <div className="form__input-group home__popup_name_group">
+        <label>Name:</label>
+        <input type="text" className="form__input" onChange={UpdateChatName} autoFocus value={newChatName} placeholder="New Chat Name"></input>
+        <div className="form__input-error-message"></div>
+      </div>
+      <div className="form__input-group home__popup_name_group">
+        <label>Password:</label>
+        <input type="text" className="form__input" onChange={UpdateChatPassword} autoFocus value={newChatPassword} placeholder="New Chat password"></input>
+        <div className="form__input-error-message"></div>
+      </div>
+      <div className="home__popup-confirmation">
+        <button className="form__button" type="button" onClick={EditChat}>Confirm</button>
+        <button className="home__popup-cancel" type="button" onClick={CloseEditChat}>Cancel</button>
+      </div>
+    </div>
     <div className='home__sidebar'>
       <div className='home__sidebar_top'>
         <button className='home__userIcon__container' onClick={PopupConfig}>
@@ -344,17 +407,24 @@ const TeamTether = () => {
         </button>
         <div className='home__userInfo__container'>
           <h1>{user.name}</h1>
-          <p>{chats.length}{chats.length == 1 ? " Chat" : " Chats"}</p>
+          <p>{chats.length}{chats.length == 1 ? " Team" : " Teams"}</p>
         </div>
       </div>
       <div className='home__sidebar_bottom' onClick={GetChats}>
+
+        <button className='chatHeader'>
+          <h1>Teams</h1>
+          <button className='addChatButton' onClick={addChat}>
+            <FontAwesomeIcon icon={faPlus} className='addChatIcon'></FontAwesomeIcon>
+          </button>
+        </button>
         <div>
-          <button className='chatHeader'>
+          <label>
             <h1>Teams</h1>
             <button className='addChatButton' onClick={addChat}>
               <FontAwesomeIcon icon={faPlus} className='addChatIcon'></FontAwesomeIcon>
             </button>
-          </button>
+          </label>
           {chats.map((chat) => (
             <button onClick={() => GetMessages(chat)} className='chat'>
               {chat.users.length == 1 ? <img src={chat.users[0].icon}></img> : <div className='userIcon_container'>
@@ -434,7 +504,6 @@ const TeamTether = () => {
       </button>
       <FontAwesomeIcon icon={faPen} className='openMessage' onClick={switchPost}></FontAwesomeIcon>
     </div>
-    <div className={fadeClass}></div>
   </div>)
 }
 

@@ -76,7 +76,7 @@ iframe {
   width: 100vw;
   height: 100vh;
 
-  font-family: 'Trebuchet MS';
+  font-family: 'Inter' !important;
   font: 400 1rem;
   justify-content: flex-end;
 }
@@ -99,6 +99,8 @@ iframe {
   color: white;
   background-color: var(--color-primary);
   border: 2px solid var(--color-primary);
+  position: fixed;
+  top: 15vh;
 }
 
 .addChatButton {
@@ -126,14 +128,14 @@ iframe {
 }
 
 .currentChatHeader {
-  width: 20vw;
-  border-radius: 10px;
+  width: fit-content;
+  border-bottom-left-radius: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   color: #353535;
   background-color: #ffffff;
-  border: 2px solid #e6e5e5;
+  border: none;
   border-top: none;
   border-bottom: none;
   overflow-x: hidden;
@@ -141,9 +143,14 @@ iframe {
   padding-left: 20px;
 }
 
+.currentChatHeader .userIcon_container {
+  margin: 20px;
+}
+
 .currentChatHeader h1 {
-  color: #d4d4d4;
-  margin-left: 20px;
+  color: #b9b9b9;
+  margin: 20px;
+  font-size: 1.5vw;
 }
 
 .currentChatHeader img {
@@ -176,7 +183,8 @@ iframe {
   color: #353535;
   background-color: #ffffff;
   border: 2px solid #e6e5e5;
-  overflow-x: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
 }
 
 .chat:hover {
@@ -191,6 +199,7 @@ iframe {
 .chat h1 {
   text-align: left;
   padding-left: 10px;
+  overflow: visible;
 }
 
 .post {
@@ -403,11 +412,15 @@ iframe {
 
 .home__sidebar {
   position: absolute;
-  width: 20vw;
+  width: 25vw;
   height: 90vh;
   margin-left: 10px;
   left: 0;
   z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
 }
 
 .home__sidebar_top {
@@ -429,13 +442,33 @@ iframe {
 
 .home__sidebar_bottom {
   background-color: #ededed;
-  border: 2px solid #b9b9b9;
+  border-top: none;
   border-radius: 10px;
-  width: 20vw;
-  height: 85vh;
+  width: 25vw;
+  height: 75vh;
+  padding-top: 10vh;
   left: 0;
   z-index: 4;
+  display: flex;
+  justify-content: center;
+  overflow: scroll;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  margin-top: 10vh;
 }
+
+
+.home__sidebar_bottom label {
+  width: 20vw;
+  height: 0vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  visibility: hidden;
+}
+
 
 .home__navbar {
   width: 100vw;
@@ -447,7 +480,6 @@ iframe {
   display: flex;
   flex-direction: row-reverse;
   z-index: 2;
-  border-bottom: 2px solid #d7d7d7;
 }
 
 .home__userInfo__container h1 {
@@ -922,6 +954,11 @@ iframe {
 
 .form__link:hover {
   color: var(--color-secondary)
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./icons/Inter-Regular.ttf');
 }
 
 ::-webkit-input-placeholder {
