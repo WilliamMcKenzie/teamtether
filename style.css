@@ -19,7 +19,7 @@ body {
 }
 
 .whiteBg {
-  background-color: #F5F6F7;
+  background-color: #efefef;
   width: 100vw;
   height: 100vh;
   position: absolute;
@@ -109,7 +109,7 @@ iframe {
   align-items: center;
   color: white;
   background: rgb(190, 47, 47);
-  background: linear-gradient(90deg, rgba(190, 47, 47, 1) 0%, rgba(231, 77, 142, 1) 100%);
+  background: linear-gradient(90deg, rgba(190, 47, 47, 1) 0%, rgb(255 32 32) 100%);
   border: none;
   position: fixed;
   top: 15vh;
@@ -137,7 +137,7 @@ iframe {
 .addChatIcon {
   height: 40px;
   width: 40px;
-  color: rgba(231, 77, 142, 1);
+  color: rgb(255 32 32);
 }
 
 .currentChatHeader {
@@ -190,21 +190,22 @@ iframe {
 
 .chat {
   margin-top: 5px;
-  width: 20vw;
-  border-radius: 10px;
+  width: 22vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
   display: flex;
   flex-direction: row;
   align-items: center;
   color: #353535;
   background-color: #ffffff;
-  border: 2px solid #ffffff;
+  border: none;
   overflow-x: scroll;
   white-space: nowrap;
   font-family: 'Inter';
 }
 
 .chat:hover {
-  filter: brightness(0.8);
+  filter: brightness(0.9);
   cursor: pointer;
 }
 
@@ -437,8 +438,8 @@ iframe {
 }
 
 .home__sidebar_top {
-  background: rgb(190, 47, 47);
-  background: linear-gradient(90deg, rgba(190, 47, 47, 1) 0%, rgba(231, 77, 142, 1) 100%);
+  background: rgb(199, 33, 33);
+
   width: 20vw;
   height: 10vh;
   margin-bottom: 2vh;
@@ -454,7 +455,7 @@ iframe {
 }
 
 .home__sidebar_bottom {
-  background-color: #ededed;
+  background-color: #ffffff;
   border-top: none;
   border-radius: 10px;
   width: 22vw;
@@ -493,18 +494,20 @@ iframe {
   display: flex;
   flex-direction: row-reverse;
   z-index: 4;
-  border-bottom: 20px solid #F5F6F7;
+  border-bottom: 20px solid #efefef;
 }
 
 .home__userInfo__container h1 {
   color: white;
   margin-bottom: 0;
+  font-size: 2vw;
 }
 
 .home__userInfo__container p {
   color: #e6e5e5;
   margin-top: 5px;
   font-family: 'Inter';
+  font-size: 1.2vw;
 }
 
 .home__userIcon__container {
@@ -969,6 +972,38 @@ iframe {
 
 .form__link:hover {
   color: var(--color-secondary)
+}
+
+@media (max-width: 700px) {
+  .home__sidebar {
+    /* visibility: hidden; */
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .home__sidebar_top {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .home__sidebar_bottom {
+    width: 100vw;
+  }
+
+  .chatHeader {
+    width: 70vw;
+    top: 2vh;
+  }
+
+  .chat {
+    width: 100vw;
+  }
+
+
+  .whiteBg {
+    z-index: 4;
+  }
 }
 
 @font-face {
