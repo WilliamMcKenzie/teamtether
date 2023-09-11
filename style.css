@@ -1,7 +1,11 @@
 body {
-  --color-primary: #BE2F2F;
-  --color-primary-dark: #aa2244;
-  --color-secondary: #0951D3;
+  --color-primary-lighter: #e3e3ff;
+  --color-primary-light: #7c7cd7;
+  --color-primary: #4f4f93;
+  --color-primary-dark: #383875;
+  --color-secondary: #283845;
+  --color-secondary-mid: #243240;
+  --color-secondary-dark: #202C39;
   --color-error: #cc4333;
   --color-success: #4bb544;
   --border-radius: 10px;
@@ -19,12 +23,13 @@ body {
 }
 
 .whiteBg {
-  background-color: #efefef;
+  background-color: var(--color-secondary-dark);
   width: 100vw;
   height: 100vh;
   position: absolute;
   left: 0;
   right: 0;
+  visibility: hidden;
 }
 
 iframe {
@@ -52,7 +57,7 @@ iframe {
 
 .fade {
   z-index: 4;
-  opacity: 0.1;
+  opacity: 0.3;
   background-color: black;
   position: absolute;
   width: 100vw;
@@ -76,7 +81,7 @@ iframe {
   padding: 2rem;
   box-shadow: 0 0 30px -5px rgba(0, 0, 0.2);
   border-radius: var(--border-radius);
-  background: #ffffff;
+  background: var(--color-secondary);
 }
 
 
@@ -99,6 +104,7 @@ iframe {
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
+  background-color: rgba(0, 0, 0.2, 0.1);
 }
 
 .chatHeader {
@@ -108,8 +114,9 @@ iframe {
   flex-direction: row;
   align-items: center;
   color: white;
-  background: rgb(190, 47, 47);
-  background: linear-gradient(90deg, rgba(190, 47, 47, 1) 0%, rgb(255 32 32) 100%);
+  background: url("icons/headerBackground.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   border: none;
   position: fixed;
   top: 15vh;
@@ -137,7 +144,7 @@ iframe {
 .addChatIcon {
   height: 40px;
   width: 40px;
-  color: rgb(255 32 32);
+  color: var(--color-primary-light);
 }
 
 .currentChatHeader {
@@ -147,7 +154,9 @@ iframe {
   flex-direction: row;
   align-items: center;
   color: #353535;
-  background-color: #ffffff;
+  background: var(--color-primary);
+  background-repeat: no-repeat;
+  background-size: cover;
   border: none;
   border-top: none;
   border-bottom: none;
@@ -163,7 +172,7 @@ iframe {
 }
 
 .currentChatHeader h1 {
-  color: #b9b9b9;
+  color: rgb(214, 214, 214);
   margin: 20px;
   font-size: 1.5vw;
 }
@@ -176,16 +185,15 @@ iframe {
   height: 40px;
   width: 40px;
   padding: 10px;
-  color: #e6e5e5;
-  background-color: white;
+  color: var(--color-primary-light);
+  background-color: transparent;
   border-radius: 10px;
   margin-left: auto;
   margin-right: 10px;
 }
 
 .gear:hover {
-  color: var(--color-primary);
-  filter: brightness(0.90);
+  filter: brightness(0.9);
 }
 
 .chat {
@@ -196,8 +204,8 @@ iframe {
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #353535;
-  background-color: #ffffff;
+  color: var(--color-primary-lighter);
+  background-color: var(--color-secondary-mid);
   border: none;
   overflow-x: scroll;
   white-space: nowrap;
@@ -210,7 +218,16 @@ iframe {
 }
 
 .chat img {
-  width: 50px;
+  width: 46px;
+  background: white;
+  border: 2px solid white;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.userIcon_container img {
+  border: none !important;
+  padding: 0 !important;
 }
 
 .chat h1 {
@@ -229,7 +246,7 @@ iframe {
 .postInput {
   width: calc(65vw - 12px);
   height: 100px;
-  border-top: 2px solid #d7d7d7;
+  border-top: 2px solid var(--color-secondary-dark);
   border-bottom: none;
   outline: none;
   padding: 0;
@@ -238,6 +255,7 @@ iframe {
   padding: 4px;
   overflow-y: scroll;
   margin: 0;
+  color: rgb(216, 216, 216);
 }
 
 .postHeader {
@@ -247,6 +265,7 @@ iframe {
   outline: none;
   margin-top: 5px !important;
   margin-bottom: 5px !important;
+  color: rgb(216, 216, 216);
 
   overflow-x: scroll !important;
 }
@@ -256,17 +275,17 @@ iframe {
   height: 40px;
   width: 40px;
   z-index: 12;
-  background: white;
+  background: var(--color-secondary);
   border-radius: 10px;
   position: absolute;
   bottom: 50px;
   right: 50px;
-  color: #d4d4d4;
+  color: var(--color-primary);
 }
 
 .openMessage:hover {
   color: var(--color-primary);
-  filter: brightness(0.90);
+  filter: brightness(1.2);
 }
 
 .postMessage {
@@ -281,7 +300,7 @@ iframe {
   margin-top: 10px;
   padding-bottom: 80px;
   color: #353535;
-  background-color: #ffffff;
+  background-color: var(--color-secondary);
   border: none;
   border-radius: 10px;
   z-index: 10;
@@ -298,7 +317,7 @@ iframe {
   margin-top: 20px;
   padding-bottom: 80px;
   color: #353535;
-  background-color: #ffffff;
+  background-color: var(--color-secondary-dark);
   border: none;
   border-radius: 10px;
   z-index: 1;
@@ -331,12 +350,12 @@ iframe {
 .message p {
   font-size: 20px;
   font-weight: 100;
-  color: #5a5a5a;
+  color: rgb(212, 212, 212);
 
   height: fit-content;
   max-height: 210px;
   line-height: 1.6;
-  width: 56vw;
+  width: 35vw;
   padding-left: 20px;
   overflow: auto;
   text-overflow: ellipsis;
@@ -347,11 +366,15 @@ iframe {
   width: 5vw;
   max-width: 40px;
   margin: 10px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .message h1 {
   margin: 0;
   margin-top: 10px;
+  color: var(--color-primary-lighter);
 
   max-width: 60vw;
   overflow-x: scroll;
@@ -360,8 +383,8 @@ iframe {
 .bottom_gradient {
   position: absolute;
   bottom: 0px;
-  width: 56vw;
-  box-shadow: 0px 0px 30px 20px white;
+  width: 35vw;
+  box-shadow: 0px 0px 30px 20px var(--color-secondary);
   z-index: 1;
 }
 
@@ -374,10 +397,10 @@ iframe {
   width: 96%;
   padding-bottom: 16px;
 
-  border-top: 2px solid rgb(224, 224, 224);
+  border-top: 2px solid var(--color-secondary-dark);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: white;
+  background-color: var(--color-secondary);
   align-items: center;
   z-index: 10;
 }
@@ -388,40 +411,58 @@ iframe {
   justify-content: center;
   position: absolute;
   bottom: 0;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--color-secondary-dark);
   width: 100%;
-  padding-bottom: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 
-  border-top: 4px solid white;
+  border-top: 2px solid var(--color-secondary);
   border-radius: 10px;
   align-items: center;
 }
 
+.message_options div {
+  display: flex;
+  align-items: center;
+  height: 25px;
+  padding-top: 7.5px;
+  padding-bottom: 7.5px;
+  margin: 5px;
+  border-radius: 10px;
+
+  background-color: var(--color-secondary);
+}
+
+.message_options div svg {
+  margin: 0 !important;
+}
+
 
 .message_options h1 {
-  color: #d4d4d4;
+  color: #3a4e5e;
   width: 40px;
   height: 40px;
-  margin: 10px;
+  margin: 5px;
   line-height: 40px;
 }
 
 .message_icon {
-  width: 40px;
-  height: 40px;
-  margin: 10px;
+  width: 25px;
+  height: 25px;
+  margin: 5px;
   padding: 7.5px;
   z-index: 2;
   border-radius: 10px;
 
-  color: #d4d4d4
+  color: #3a4e5e;
+  background-color: var(--color-secondary);
 }
 
 .message_icon:hover {
   filter: brightness(1.2);
-  background-color: rgb(191, 191, 191);
+  background-color: var(--color-secondary);
 
-  color: var(--color-primary-dark);
+  color: var(--color-primary);
 }
 
 .home__sidebar {
@@ -438,13 +479,13 @@ iframe {
 }
 
 .home__sidebar_top {
-  background: rgb(199, 33, 33);
+  background: var(--color-primary-light);
 
   width: 20vw;
   height: 10vh;
   margin-bottom: 2vh;
   border-radius: 10px;
-  box-shadow: 0 7px 10px -6px gray;
+  box-shadow: 0 7px 10px -6px var(--color-secondary-dark);
   left: 0;
   margin-top: 10px;
   z-index: 4;
@@ -455,7 +496,7 @@ iframe {
 }
 
 .home__sidebar_bottom {
-  background-color: #ffffff;
+  background-color: var(--color-secondary-mid);
   border-top: none;
   border-radius: 10px;
   width: 22vw;
@@ -489,12 +530,12 @@ iframe {
   width: 100vw;
   height: 10vh;
   top: 0px;
-  background-color: #ffffff;
+  background-color: var(--color-secondary);
   position: absolute;
   display: flex;
   flex-direction: row-reverse;
   z-index: 4;
-  border-bottom: 20px solid #efefef;
+  border-bottom: 20px solid var(--color-secondary-dark);
 }
 
 .home__userInfo__container h1 {
@@ -513,8 +554,7 @@ iframe {
 .home__userIcon__container {
   padding: 10px;
   outline: none;
-  border: 1vh solid #ffffff;
-  border: 2px solid var(--color-primary-dark);
+  border: none;
   border-radius: 10px;
 
   margin: 0.7vh;
@@ -522,7 +562,7 @@ iframe {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
+  background: white;
 }
 
 .home__userIcon__container:hover {
@@ -569,7 +609,7 @@ iframe {
   box-shadow: none !important;
 
   border: 2px solid #d7d7d7;
-  border-top: 30px solid #eeee;
+  border-top: 30px solid var(--color-secondary-dark);
 }
 
 .message__popup_container {
@@ -594,20 +634,20 @@ iframe {
   border-radius: 10px;
   padding-top: 2.5px;
   padding-bottom: 2.5px;
-  background-color: rgb(244, 244, 244);
+  background-color: var(--color-secondary-dark);
   color: #bdb8b8ee;
 }
 
 .message__popup svg:hover {
-  background-color: white;
-  filter: brightness(0.95);
+  background-color: var(--color-secondary);
+  filter: brightness(1.2);
 }
 
 .message__popup_close {
   position: absolute;
   top: -37.5px;
   right: 5px;
-  background-color: #eeee !important;
+  background-color: var(--color-secondary-dark) !important;
 }
 
 .message__popup_close:hover {
@@ -628,13 +668,13 @@ iframe {
   text-align: center;
   z-index: 10;
 
-  border-top: 30px solid #eeee;
+  border-top: 30px solid var(--color-secondary-dark);
 }
 
 .home__popup label {
   font-style: italic;
-  color: #757575;
-  background-color: #ffffff;
+  color: #b1b1b1;
+  background-color: var(--color-secondary);
   padding: 0.75rem;
   border-radius: var(--border-radius);
   text-align: left;
@@ -656,10 +696,10 @@ iframe {
   position: absolute;
   right: 10px;
   top: 10px;
-  background: #eeeeee;
+  background: var(--color-secondary-dark);
   outline: none;
   border-radius: var(--border-radius);
-  border-color: #eeeeee;
+  border-color: var(--color-secondary);
   border-style: solid;
   padding: 0.75rem;
 }
@@ -674,8 +714,9 @@ iframe {
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border: 5px solid white;
-  background-color: white;
+  border: 15px solid var(--color-primary-lighter);
+  border-radius: 10px;
+  background-color: var(--color-primary-lighter);
 
   position: absolute;
   margin-left: auto;
@@ -686,10 +727,10 @@ iframe {
 }
 
 .home__popup__image_refresh {
-  background: #eeeeee;
+  background: var(--color-secondary-dark);
   outline: none;
   border-radius: var(--border-radius);
-  border-color: #eeeeee;
+  border-color: var(--color-secondary);
   border-style: solid;
   padding: 0.75rem;
 
@@ -704,7 +745,7 @@ iframe {
 }
 
 .home__popup__image_refresh:hover {
-  background: #ffffff;
+  background: var(--color-primary-lighter);
   border-color: var(--color-primary-dark);
   cursor: pointer;
 }
@@ -756,7 +797,7 @@ iframe {
   padding: 1rem;
   font-weight: bold;
   font-size: 1.3rem;
-  color: #ffffff;
+  color: var(--color-primary-lighter);
   border: none;
   border-radius: var(--border-radius);
   outline: none;
@@ -774,7 +815,7 @@ iframe {
 
 .home__chats {
   width: 10vw;
-  background-color: #F7F7F7;
+  background-color: var(--color-secondary-dark);
   height: 100vh;
 
   display: flex;
@@ -784,7 +825,7 @@ iframe {
 
 .home__chats div {
   width: 8vw;
-  background-color: #ffffff;
+  background-color: var(--color-secondary-dark);
   margin-top: 10vh;
   height: 10vh
 }
@@ -806,7 +847,7 @@ iframe {
   margin-top: 15vh;
   height: fit-content;
 
-  background-color: white;
+  background-color: var(--color-secondary);
   border-radius: 10px;
   border: none;
   outline: none;
@@ -846,22 +887,26 @@ iframe {
 }
 
 .circle {
-  background-color: #dddddd;
-  border-radius: 50px;
+  background-color: #d7d7d7 !important;
+  border-radius: 50px !important;
   width: 20px !important;
   margin: 2.5px;
 }
 
 .square {
-  background-color: #eeeeee;
   width: 20px !important;
   margin: 2.5px;
+  border-radius: 0 !important;
 }
 
 .userIcon_container {
   display: grid;
   grid-template-columns: auto auto;
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 5px;
 }
+
 
 
 /* form styling */
@@ -884,7 +929,7 @@ iframe {
 .form__title {
   margin-bottom: 2rem;
   text-align: center;
-
+  color: var(--color-primary-lighter);
 }
 
 .form__message {
@@ -912,17 +957,18 @@ iframe {
   padding: 0.75rem;
   box-sizing: border-box;
   border-radius: var(--border-radius);
-  border-color: #eeeeee;
+  border-color: var(--color-secondary-dark);
   border-style: solid;
   outline: none;
-  background: #eeeeee;
+  background: var(--color-secondary-dark);
+  color: var(--color-primary-lighter);
   transition: background 0.2s, border-color 0.2s;
   font-family: 'Trebuchet MS';
 }
 
 .form__input:focus {
-  border-color: var(--color-primary-dark);
-  background: white;
+  border-color: var(--color-primary);
+  background: var(--color-secondary);
 }
 
 .form__input--error {
@@ -943,7 +989,7 @@ iframe {
   padding: 1rem;
   font-weight: bold;
   font-size: 1.3rem;
-  color: #ffffff;
+  color: var(--color-primary-lighter);
   border: none;
   border-radius: var(--border-radius);
   outline: none;
@@ -965,13 +1011,13 @@ iframe {
 }
 
 .form__link {
-  color: var(--color-primary-dark);
+  color: var(--color-primary-light);
   text-decoration: none;
   cursor: pointer;
 }
 
 .form__link:hover {
-  color: var(--color-secondary)
+  color: var(--color-primary-lighter);
 }
 
 @media (max-width: 700px) {

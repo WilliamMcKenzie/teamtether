@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faThumbsUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
@@ -460,16 +460,19 @@ const TeamTether = () => {
               </p>
             </div>
             <div className='message_options'>
-              <FontAwesomeIcon icon={faThumbsUp} className='message_icon' onClick={async () => {
-                var res = await fetcher(`/api/likeMessage?id=${message.id}&likes=${message.likes}`, false);
-                GetMessages(curChat.current)
-              }}></FontAwesomeIcon>
-              <h1>{message.likes}</h1>
-              <FontAwesomeIcon icon={faThumbsDown} className='message_icon' onClick={async () => {
-                var res = await fetcher(`/api/dislikeMessage?id=${message.id}&likes=${message.likes}`, false);
-                GetMessages(curChat.current)
-              }}></FontAwesomeIcon>
+              <div>
+                <FontAwesomeIcon icon={faThumbsUp} className='message_icon' onClick={async () => {
+                  var res = await fetcher(`/api/likeMessage?id=${message.id}&likes=${message.likes}`, false);
+                  GetMessages(curChat.current)
+                }}></FontAwesomeIcon>
+                <h1>{message.likes}</h1>
+                <FontAwesomeIcon icon={faThumbsDown} className='message_icon' onClick={async () => {
+                  var res = await fetcher(`/api/dislikeMessage?id=${message.id}&likes=${message.likes}`, false);
+                  GetMessages(curChat.current)
+                }}></FontAwesomeIcon>
+              </div>
               <FontAwesomeIcon icon={faShare} className='message_icon' onClick={shareMessage}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faComment} className='message_icon'></FontAwesomeIcon>
             </div>
           </button>
         )
