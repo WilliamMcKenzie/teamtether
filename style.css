@@ -3,6 +3,8 @@ body {
   --color-primary-light: #7c7cd7;
   --color-primary: #4f4f93;
   --color-primary-dark: #383875;
+  --color-secondary-lighter: #5a768e;
+  --color-secondary-light: #3f5568;
   --color-secondary: #283845;
   --color-secondary-mid: #243240;
   --color-secondary-dark: #202C39;
@@ -29,7 +31,6 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  visibility: hidden;
 }
 
 iframe {
@@ -98,33 +99,33 @@ iframe {
 }
 
 .home__content {
-  width: 79vw;
+  width: 70vw;
   margin-top: 10vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   overflow-y: scroll;
-  background-color: rgba(0, 0, 0.2, 0.1);
 }
 
 .chatHeader {
-  width: 20vw;
-  border-radius: 10px;
+  width: 22vw;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: white;
-  background: url("icons/headerBackground.png");
+  color: var(--color-secondary-lighter);
+  background: var(--color-secondary-mid);
   background-repeat: no-repeat;
   background-size: cover;
   border: none;
   position: fixed;
-  top: 15vh;
+  top: 16vh;
   font-family: 'Inter';
 }
 
 .addChatButton {
-  background-color: white;
+  background-color: var(--color-secondary-light);
   border: none;
   border-radius: 200px;
   margin-left: auto;
@@ -144,7 +145,7 @@ iframe {
 .addChatIcon {
   height: 40px;
   width: 40px;
-  color: var(--color-primary-light);
+  color: var(--color-secondary);
 }
 
 .currentChatHeader {
@@ -196,6 +197,11 @@ iframe {
   filter: brightness(0.9);
 }
 
+.chatSelected {
+  color: white;
+  background-color: var(--color-secondary);
+}
+
 .chat {
   margin-top: 5px;
   width: 22vw;
@@ -204,7 +210,7 @@ iframe {
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: var(--color-primary-lighter);
+  color: var(--color-secondary-light);
   background-color: var(--color-secondary-mid);
   border: none;
   overflow-x: scroll;
@@ -213,9 +219,11 @@ iframe {
 }
 
 .chat:hover {
-  filter: brightness(0.9);
+  filter: brightness(1.1);
   cursor: pointer;
+  color: var(--color-secondary-lighter);
 }
+
 
 .chat img {
   width: 46px;
@@ -231,6 +239,7 @@ iframe {
 }
 
 .chat h1 {
+  font-size: 1.5rem;
   text-align: left;
   padding-left: 10px;
   overflow: visible;
@@ -316,8 +325,8 @@ iframe {
   margin-bottom: 10px;
   margin-top: 20px;
   padding-bottom: 80px;
-  color: #353535;
-  background-color: var(--color-secondary-dark);
+  color: var(--color-secondary-dark);
+  background-color: var(--color-secondary);
   border: none;
   border-radius: 10px;
   z-index: 1;
@@ -374,7 +383,7 @@ iframe {
 .message h1 {
   margin: 0;
   margin-top: 10px;
-  color: var(--color-primary-lighter);
+  color: white;
 
   max-width: 60vw;
   overflow-x: scroll;
@@ -397,7 +406,7 @@ iframe {
   width: 96%;
   padding-bottom: 16px;
 
-  border-top: 2px solid var(--color-secondary-dark);
+  border-top: 2px solid var(--color-secondary-light);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   background-color: var(--color-secondary);
@@ -411,12 +420,11 @@ iframe {
   justify-content: center;
   position: absolute;
   bottom: 0;
-  background-color: var(--color-secondary-dark);
+  background-color: var(--color-secondary);
   width: 100%;
   padding-top: 8px;
   padding-bottom: 8px;
 
-  border-top: 2px solid var(--color-secondary);
   border-radius: 10px;
   align-items: center;
 }
@@ -430,7 +438,7 @@ iframe {
   margin: 5px;
   border-radius: 10px;
 
-  background-color: var(--color-secondary);
+  background-color: var(--color-secondary-light);
 }
 
 .message_options div svg {
@@ -439,7 +447,7 @@ iframe {
 
 
 .message_options h1 {
-  color: #3a4e5e;
+  color: var(--color-secondary-lighter);
   width: 40px;
   height: 40px;
   margin: 5px;
@@ -454,15 +462,14 @@ iframe {
   z-index: 2;
   border-radius: 10px;
 
-  color: #3a4e5e;
-  background-color: var(--color-secondary);
+  color: var(--color-secondary-lighter);
+  background-color: var(--color-secondary-light);
 }
 
 .message_icon:hover {
   filter: brightness(1.2);
-  background-color: var(--color-secondary);
 
-  color: var(--color-primary);
+  color: var(--color-primary-light);
 }
 
 .home__sidebar {
@@ -479,7 +486,8 @@ iframe {
 }
 
 .home__sidebar_top {
-  background: var(--color-primary-light);
+  background: var(--color-secondary-dark);
+  background-size: cover;
 
   width: 20vw;
   height: 10vh;
@@ -518,7 +526,7 @@ iframe {
 .home__sidebar_bottom label {
   width: 20vw;
   height: 0vh;
-  margin-bottom: 50px;
+  margin-bottom: -50px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -539,13 +547,13 @@ iframe {
 }
 
 .home__userInfo__container h1 {
-  color: white;
+  color: var(--color-secondary-lighter);
   margin-bottom: 0;
   font-size: 2vw;
 }
 
 .home__userInfo__container p {
-  color: #e6e5e5;
+  color: var(--color-secondary-light);
   margin-top: 5px;
   font-family: 'Inter';
   font-size: 1.2vw;

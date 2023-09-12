@@ -430,7 +430,7 @@ const TeamTether = () => {
             </button>
           </label>
           {chats.map((chat) => (
-            <button onClick={() => GetMessages(chat)} className='chat'>
+            <button onClick={() => { GetMessages(chat) }} className={curChat.current.id = chat.id ? 'chat' : 'chat chatSelected'}>
               {chat.users.length == 1 ? <img src={chat.users[0].icon}></img> : <div className='userIcon_container'>
                 <img src={chat.users[0] ? chat.users[0].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={chat.users[0] ? "square" : "circle"}></img>
                 <img src={chat.users[1] ? chat.users[1].icon : "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="} className={chat.users[1] ? "square" : "circle"}></img>
